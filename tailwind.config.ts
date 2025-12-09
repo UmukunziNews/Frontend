@@ -81,6 +81,12 @@ export default {
           busy: "rgb(239 68 68)",
           offline: "rgb(156 163 175)",
         },
+        "accent-blue": {
+          DEFAULT: "hsl(var(--accent-blue) / <alpha-value>)",
+        },
+        "accent-yellow": {
+          DEFAULT: "hsl(var(--accent-yellow) / <alpha-value>)",
+        },
       },
       fontFamily: {
         sans: ["var(--font-sans)"],
