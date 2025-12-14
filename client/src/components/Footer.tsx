@@ -6,10 +6,12 @@ import { useToast } from "@/hooks/use-toast";
 import { categories } from "@shared/schema";
 import { SiFacebook, SiX, SiInstagram, SiYoutube, SiLinkedin } from "react-icons/si";
 import { ArrowUp } from "lucide-react";
+import { ContactModal } from "@/components/ContactModal";
 
 export function Footer() {
   const [email, setEmail] = useState("");
   const [isSubscribing, setIsSubscribing] = useState(false);
+  const [contactOpen, setContactOpen] = useState(false);
   const { toast } = useToast();
 
   const handleSubscribe = async (e: React.FormEvent) => {
@@ -96,32 +98,36 @@ export function Footer() {
             <ul className="flex flex-col gap-2">
               <li>
                 <Link
-                  href="#"
+                  href="/about"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  data-testid="footer-link-about"
                 >
                   About Us
                 </Link>
               </li>
               <li>
-                <Link
-                  href="#"
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                <button
+                  onClick={() => setContactOpen(true)}
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors text-left"
+                  data-testid="footer-link-contact"
                 >
                   Contact
-                </Link>
+                </button>
               </li>
               <li>
                 <Link
-                  href="#"
+                  href="/careers"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  data-testid="footer-link-careers"
                 >
                   Careers
                 </Link>
               </li>
               <li>
                 <Link
-                  href="#"
+                  href="/advertise"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  data-testid="footer-link-advertise"
                 >
                   Advertise Here
                 </Link>
@@ -194,6 +200,7 @@ export function Footer() {
           </div>
         </div>
       </div>
+      <ContactModal open={contactOpen} onOpenChange={setContactOpen} />
     </footer>
   );
 }
