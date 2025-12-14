@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { categories } from "@shared/schema";
 import { SiFacebook, SiX, SiInstagram, SiYoutube, SiLinkedin } from "react-icons/si";
+import { ArrowUp } from "lucide-react";
 
 export function Footer() {
   const [email, setEmail] = useState("");
@@ -17,7 +18,6 @@ export function Footer() {
 
     setIsSubscribing(true);
     
-    // Simulate subscription
     await new Promise(resolve => setTimeout(resolve, 500));
     
     toast({
@@ -26,6 +26,13 @@ export function Footer() {
     });
     setEmail("");
     setIsSubscribing(false);
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
 
   const socialLinks = [
@@ -39,7 +46,20 @@ export function Footer() {
   return (
     <footer className="bg-card border-t border-border mt-12">
       <div className="max-w-7xl mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="flex justify-end mb-6">
+          <Button
+            onClick={scrollToTop}
+            variant="outline"
+            size="sm"
+            className="gap-2"
+            data-testid="button-back-to-top"
+          >
+            <ArrowUp className="h-4 w-4" />
+            Back to Top
+          </Button>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           <div>
             <Link href="/" className="flex items-center mb-4">
               <span className="text-2xl font-bold text-accent-blue">News</span>
@@ -72,7 +92,45 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="font-bold mb-4">Subscribe to Newsletter</h4>
+            <h4 className="font-bold mb-4">Company</h4>
+            <ul className="flex flex-col gap-2">
+              <li>
+                <Link
+                  href="#"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="#"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Contact
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="#"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Careers
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="#"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Advertise Here
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-bold mb-4">Newsletter</h4>
             <p className="text-muted-foreground text-sm mb-4">
               Get the latest news delivered to your inbox.
             </p>

@@ -5,7 +5,6 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { BackToTop } from "@/components/BackToTop";
 import { SearchProvider } from "@/context/SearchContext";
 import Home from "@/pages/home";
 import CategoryPage from "@/pages/category";
@@ -34,7 +33,6 @@ function App() {
               <Router />
             </div>
             <Footer />
-            <BackToTop />
           </div>
         </SearchProvider>
         <Toaster />
