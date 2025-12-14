@@ -143,96 +143,39 @@ export function SearchFilters({ filters, onFiltersChange, onClear }: SearchFilte
   );
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex gap-2">
-        <form onSubmit={handleSearchSubmit} className="flex-1">
-          <div className="relative w-full">
-            <Sheet open={isOpen} onOpenChange={setIsOpen}>
-              <SheetTrigger asChild>
-                <button
-                  type="button"
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground cursor-pointer"
-                  data-testid="button-open-filters"
-                >
-                  <Search className="h-4 w-4" />
-                </button>
-              </SheetTrigger>
-              <SheetContent>
-                <SheetHeader>
-                  <SheetTitle>Filter Articles</SheetTitle>
-                  <SheetDescription>
-                    Refine your search with advanced filters
-                  </SheetDescription>
-                </SheetHeader>
-                <div className="mt-6">
-                  <FilterControls />
-                </div>
-              </SheetContent>
-            </Sheet>
-            <Input
-              type="text"
-              placeholder="Search articles..."
-              value={localSearch}
-              onChange={(e) => setLocalSearch(e.target.value)}
-              className="pl-10"
-              data-testid="input-search"
-            />
-          </div>
-        </form>
+    <form onSubmit={handleSearchSubmit} className="w-full">
+      <div className="relative w-full">
+        <Sheet open={isOpen} onOpenChange={setIsOpen}>
+          <SheetTrigger asChild>
+            <button
+              type="button"
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground cursor-pointer"
+              data-testid="button-open-filters"
+            >
+              <Search className="h-4 w-4" />
+            </button>
+          </SheetTrigger>
+          <SheetContent>
+            <SheetHeader>
+              <SheetTitle>Filter Articles</SheetTitle>
+              <SheetDescription>
+                Refine your search with advanced filters
+              </SheetDescription>
+            </SheetHeader>
+            <div className="mt-6">
+              <FilterControls />
+            </div>
+          </SheetContent>
+        </Sheet>
+        <Input
+          type="text"
+          placeholder="Search articles..."
+          value={localSearch}
+          onChange={(e) => setLocalSearch(e.target.value)}
+          className="pl-10"
+          data-testid="input-search"
+        />
       </div>
-
-      <div className="hidden lg:block">
-        <div className="flex items-center gap-4 flex-wrap">
-          <Select value={filters.category} onValueChange={handleCategoryChange}>
-            <SelectTrigger className="w-[180px]" data-testid="select-category-inline">
-              <SelectValue placeholder="Category" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="All">All Categories</SelectItem>
-              {categories.map((cat) => (
-                <SelectItem key={cat} value={cat}>{cat}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-
-          <Select value={filters.mediaType} onValueChange={handleMediaTypeChange}>
-            <SelectTrigger className="w-[140px]" data-testid="select-media-type-inline">
-              <SelectValue placeholder="Media Type" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Types</SelectItem>
-              {mediaTypes.map((type) => (
-                <SelectItem key={type} value={type} className="capitalize">{type}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-
-          <div className="flex items-center gap-2">
-            <Input
-              type="date"
-              value={filters.fromDate}
-              onChange={(e) => handleFromDateChange(e.target.value)}
-              className="w-[150px]"
-              data-testid="input-from-date-inline"
-            />
-            <span className="text-muted-foreground">to</span>
-            <Input
-              type="date"
-              value={filters.toDate}
-              onChange={(e) => handleToDateChange(e.target.value)}
-              className="w-[150px]"
-              data-testid="input-to-date-inline"
-            />
-          </div>
-
-          {hasActiveFilters && (
-            <Button variant="ghost" size="sm" onClick={handleClear} data-testid="button-clear-inline">
-              <X className="h-4 w-4 mr-1" />
-              Clear
-            </Button>
-          )}
-        </div>
-      </div>
-    </div>
+    </form>
   );
 }
