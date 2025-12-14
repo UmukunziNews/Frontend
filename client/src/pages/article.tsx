@@ -88,7 +88,7 @@ export default function ArticlePage() {
               </span>
             </div>
 
-            <h1 className="text-3xl md:text-4xl font-bold mb-4 leading-tight" data-testid="article-title">
+            <h1 className="text-3xl md:text-4xl font-bold mb-4 leading-tight line-clamp-3" data-testid="article-title">
               {article.title}
             </h1>
 
