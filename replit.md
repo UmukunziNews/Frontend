@@ -62,3 +62,17 @@ Preferred communication style: Simple, everyday language.
 - **connect-pg-simple**: PostgreSQL session store
 - **express-session**: Session middleware
 - **passport/passport-local**: Authentication framework
+
+### Social Sharing & Analytics
+- View counter on articles (increments on page visit)
+- Social sharing buttons (Twitter/X, Facebook, LinkedIn, WhatsApp, Email, Copy Link)
+
+### Search & Filtering
+- Full-text search on article titles and descriptions
+- Filter by category, media type, and date range
+- Mobile-responsive filter sheet
+
+### Seasonal Banners
+- Dynamic banners for holidays (Christmas, Black Friday, Heroes Day)
+- Supports image, video, and GIF media
+- Dismissible with localStorage snooze (24 hours)
