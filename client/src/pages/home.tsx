@@ -1,14 +1,14 @@
-import { useState, useMemo } from "react";
+import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { NewsGrid } from "@/components/NewsGrid";
 import { Sidebar } from "@/components/Sidebar";
 import { SeasonalBanner } from "@/components/SeasonalBanner";
-import { SearchFilters, defaultFilters, type SearchFiltersState } from "@/components/SearchFilters";
 import { LoadingGrid, LoadingSidebar } from "@/components/LoadingState";
-import type { Article, MediaType } from "@shared/schema";
+import { useSearch } from "@/context/SearchContext";
+import type { Article } from "@shared/schema";
 
 export default function Home() {
-  const [filters, setFilters] = useState<SearchFiltersState>(defaultFilters);
+  const { filters, hasActiveFilters } = useSearch();
 
   const queryParams = useMemo(() => {
     const params = new URLSearchParams();
@@ -34,30 +34,11 @@ export default function Home() {
     queryKey: ["/api/articles/trending"],
   });
 
-  const handleClearFilters = () => {
-    setFilters(defaultFilters);
-  };
-
-  const hasActiveFilters = 
-    filters.search !== "" || 
-    filters.category !== "All" || 
-    filters.mediaType !== "all" ||
-    filters.fromDate !== "" ||
-    filters.toDate !== "";
-
   return (
     <div className="min-h-screen bg-background">
       <SeasonalBanner />
       
       <main className="max-w-7xl mx-auto px-4 py-8">
-        <div className="mb-8">
-          <SearchFilters
-            filters={filters}
-            onFiltersChange={setFilters}
-            onClear={handleClearFilters}
-          />
-        </div>
-
         {articles.length === 0 && !articlesLoading && (
           <div className="text-center py-12 mb-8">
             <h2 className="text-2xl font-bold mb-2">No articles found</h2>

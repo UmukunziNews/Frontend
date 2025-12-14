@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { SearchProvider } from "@/context/SearchContext";
 import Home from "@/pages/home";
 import CategoryPage from "@/pages/category";
 import ArticlePage from "@/pages/article";
@@ -25,13 +26,15 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <div className="flex flex-col min-h-screen">
-          <Header />
-          <div className="flex-1">
-            <Router />
+        <SearchProvider>
+          <div className="flex flex-col min-h-screen">
+            <Header />
+            <div className="flex-1">
+              <Router />
+            </div>
+            <Footer />
           </div>
-          <Footer />
-        </div>
+        </SearchProvider>
         <Toaster />
       </TooltipProvider>
     </QueryClientProvider>

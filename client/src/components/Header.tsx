@@ -1,16 +1,62 @@
 import { Link, useLocation } from "wouter";
 import { Menu, Search, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { useState } from "react";
-import { categories } from "@shared/schema";
+import { categories, mediaTypes, type Category, type MediaType } from "@shared/schema";
+import { useSearch } from "@/context/SearchContext";
 
 export function Header() {
   const [location] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { filters, setFilters, isOpen, setIsOpen, clearFilters, hasActiveFilters } = useSearch();
+  const [localSearch, setLocalSearch] = useState(filters.search);
 
   const isActive = (category: string) => {
     const categorySlug = category.toLowerCase().replace(/ & /g, "-").replace(/ /g, "-");
     return location === `/${categorySlug}` || (location === "/" && category === "All");
+  };
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setFilters({ ...filters, search: localSearch });
+  };
+
+  const handleCategoryChange = (value: string) => {
+    setFilters({ ...filters, category: value as Category | "All" });
+  };
+
+  const handleMediaTypeChange = (value: string) => {
+    setFilters({ ...filters, mediaType: value as MediaType | "all" });
+  };
+
+  const handleFromDateChange = (value: string) => {
+    setFilters({ ...filters, fromDate: value });
+  };
+
+  const handleToDateChange = (value: string) => {
+    setFilters({ ...filters, toDate: value });
+  };
+
+  const handleClear = () => {
+    setLocalSearch("");
+    clearFilters();
   };
 
   return (
@@ -54,9 +100,103 @@ export function Header() {
           </nav>
 
           <div className="flex items-center gap-2">
-            <Button variant="ghost" size="icon" data-testid="button-search">
-              <Search className="h-5 w-5" />
-            </Button>
+            <Sheet open={isOpen} onOpenChange={setIsOpen}>
+              <SheetTrigger asChild>
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  className={hasActiveFilters ? "text-accent-blue" : ""}
+                  data-testid="button-search"
+                >
+                  <Search className="h-5 w-5" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent>
+                <SheetHeader>
+                  <SheetTitle>Search & Filter</SheetTitle>
+                  <SheetDescription>
+                    Find articles by keyword, category, type, or date
+                  </SheetDescription>
+                </SheetHeader>
+                <div className="mt-6 flex flex-col gap-4">
+                  <form onSubmit={handleSearchSubmit} className="space-y-2">
+                    <Label htmlFor="search-input">Search</Label>
+                    <div className="flex gap-2">
+                      <Input
+                        id="search-input"
+                        type="text"
+                        placeholder="Search articles..."
+                        value={localSearch}
+                        onChange={(e) => setLocalSearch(e.target.value)}
+                        data-testid="input-search"
+                      />
+                      <Button type="submit" data-testid="button-search-submit">
+                        Search
+                      </Button>
+                    </div>
+                  </form>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="filter-category">Category</Label>
+                    <Select value={filters.category} onValueChange={handleCategoryChange}>
+                      <SelectTrigger id="filter-category" data-testid="select-filter-category">
+                        <SelectValue placeholder="All categories" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="All">All Categories</SelectItem>
+                        {categories.map((cat) => (
+                          <SelectItem key={cat} value={cat}>{cat}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="filter-media-type">Media Type</Label>
+                    <Select value={filters.mediaType} onValueChange={handleMediaTypeChange}>
+                      <SelectTrigger id="filter-media-type" data-testid="select-filter-media-type">
+                        <SelectValue placeholder="All types" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All Types</SelectItem>
+                        {mediaTypes.map((type) => (
+                          <SelectItem key={type} value={type} className="capitalize">{type}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="filter-from-date">From Date</Label>
+                    <Input
+                      id="filter-from-date"
+                      type="date"
+                      value={filters.fromDate}
+                      onChange={(e) => handleFromDateChange(e.target.value)}
+                      data-testid="input-filter-from-date"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="filter-to-date">To Date</Label>
+                    <Input
+                      id="filter-to-date"
+                      type="date"
+                      value={filters.toDate}
+                      onChange={(e) => handleToDateChange(e.target.value)}
+                      data-testid="input-filter-to-date"
+                    />
+                  </div>
+
+                  {hasActiveFilters && (
+                    <Button variant="outline" onClick={handleClear} className="w-full" data-testid="button-clear-filters">
+                      <X className="h-4 w-4 mr-2" />
+                      Clear Filters
+                    </Button>
+                  )}
+                </div>
+              </SheetContent>
+            </Sheet>
             <Button
               variant="ghost"
               size="icon"
