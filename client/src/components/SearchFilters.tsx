@@ -145,9 +145,30 @@ export function SearchFilters({ filters, onFiltersChange, onClear }: SearchFilte
   return (
     <div className="flex flex-col gap-4">
       <div className="flex gap-2">
-        <form onSubmit={handleSearchSubmit} className="flex-1 flex gap-2">
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+        <form onSubmit={handleSearchSubmit} className="flex-1">
+          <div className="relative w-full">
+            <Sheet open={isOpen} onOpenChange={setIsOpen}>
+              <SheetTrigger asChild>
+                <button
+                  type="button"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground cursor-pointer"
+                  data-testid="button-open-filters"
+                >
+                  <Search className="h-4 w-4" />
+                </button>
+              </SheetTrigger>
+              <SheetContent>
+                <SheetHeader>
+                  <SheetTitle>Filter Articles</SheetTitle>
+                  <SheetDescription>
+                    Refine your search with advanced filters
+                  </SheetDescription>
+                </SheetHeader>
+                <div className="mt-6">
+                  <FilterControls />
+                </div>
+              </SheetContent>
+            </Sheet>
             <Input
               type="text"
               placeholder="Search articles..."
@@ -157,34 +178,7 @@ export function SearchFilters({ filters, onFiltersChange, onClear }: SearchFilte
               data-testid="input-search"
             />
           </div>
-          <Button type="submit" data-testid="button-search">
-            Search
-          </Button>
         </form>
-
-        <Sheet open={isOpen} onOpenChange={setIsOpen}>
-          <SheetTrigger asChild>
-            <Button 
-              variant="outline" 
-              size="icon" 
-              className={hasActiveFilters ? "border-accent-blue text-accent-blue" : ""}
-              data-testid="button-open-filters"
-            >
-              <SlidersHorizontal className="h-4 w-4" />
-            </Button>
-          </SheetTrigger>
-          <SheetContent>
-            <SheetHeader>
-              <SheetTitle>Filter Articles</SheetTitle>
-              <SheetDescription>
-                Refine your search with advanced filters
-              </SheetDescription>
-            </SheetHeader>
-            <div className="mt-6">
-              <FilterControls />
-            </div>
-          </SheetContent>
-        </Sheet>
       </div>
 
       <div className="hidden lg:block">
