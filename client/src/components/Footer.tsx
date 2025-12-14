@@ -1,20 +1,53 @@
+import { useState } from "react";
 import { Link } from "wouter";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useToast } from "@/hooks/use-toast";
 import { categories } from "@shared/schema";
+import { SiFacebook, SiX, SiInstagram, SiYoutube, SiLinkedin } from "react-icons/si";
 
 export function Footer() {
+  const [email, setEmail] = useState("");
+  const [isSubscribing, setIsSubscribing] = useState(false);
+  const { toast } = useToast();
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+
+    setIsSubscribing(true);
+    
+    // Simulate subscription
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
+    toast({
+      title: "Subscribed!",
+      description: "Thank you for subscribing to our newsletter.",
+    });
+    setEmail("");
+    setIsSubscribing(false);
+  };
+
+  const socialLinks = [
+    { icon: SiFacebook, href: "https://facebook.com", label: "Facebook" },
+    { icon: SiX, href: "https://x.com", label: "X" },
+    { icon: SiInstagram, href: "https://instagram.com", label: "Instagram" },
+    { icon: SiYoutube, href: "https://youtube.com", label: "YouTube" },
+    { icon: SiLinkedin, href: "https://linkedin.com", label: "LinkedIn" },
+  ];
+
   return (
     <footer className="bg-card border-t border-border mt-12">
       <div className="max-w-7xl mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div className="col-span-1 md:col-span-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div>
             <Link href="/" className="flex items-center mb-4">
               <span className="text-2xl font-bold text-accent-blue">News</span>
               <span className="text-2xl font-bold text-accent-yellow">Hub</span>
             </Link>
-            <p className="text-muted-foreground text-sm max-w-md">
+            <p className="text-muted-foreground text-sm">
               Your trusted source for breaking news, in-depth investigations, 
-              and multimedia stories from around the world. Stay informed with 
-              the latest updates across all categories.
+              and multimedia stories from around the world.
             </p>
           </div>
 
@@ -39,41 +72,50 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="font-bold mb-4">Company</h4>
-            <ul className="flex flex-col gap-2">
-              <li>
-                <Link
-                  href="#"
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            <h4 className="font-bold mb-4">Subscribe to Newsletter</h4>
+            <p className="text-muted-foreground text-sm mb-4">
+              Get the latest news delivered to your inbox.
+            </p>
+            <form onSubmit={handleSubscribe} className="flex flex-col gap-2">
+              <Input
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                data-testid="input-newsletter-email"
+              />
+              <Button 
+                type="submit" 
+                disabled={isSubscribing}
+                data-testid="button-subscribe"
+              >
+                {isSubscribing ? "Subscribing..." : "Subscribe"}
+              </Button>
+            </form>
+          </div>
+
+          <div>
+            <h4 className="font-bold mb-4">Follow Us</h4>
+            <p className="text-muted-foreground text-sm mb-4">
+              Stay connected on social media.
+            </p>
+            <div className="flex items-center gap-2 flex-wrap">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={social.label}
+                  data-testid={`link-social-${social.label.toLowerCase()}`}
                 >
-                  About Us
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  Contact
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  Careers
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  Advertise
-                </Link>
-              </li>
-            </ul>
+                  <Button variant="outline" size="icon">
+                    <social.icon className="h-4 w-4" />
+                  </Button>
+                </a>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -81,7 +123,7 @@ export function Footer() {
           <p className="text-sm text-muted-foreground">
             {new Date().getFullYear()} NewsHub. All rights reserved.
           </p>
-          <div className="flex items-center gap-4 text-sm text-muted-foreground">
+          <div className="flex items-center gap-4 text-sm text-muted-foreground flex-wrap">
             <Link href="#" className="hover:text-foreground transition-colors">
               Privacy Policy
             </Link>
