@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { categories, type Category } from "@shared/schema";
+import { categories, type Category, type MediaType, type ArticleFilters } from "@shared/schema";
 
 export async function registerRoutes(
   httpServer: Server,
@@ -9,8 +9,14 @@ export async function registerRoutes(
 ): Promise<Server> {
   app.get("/api/articles", async (req, res) => {
     try {
-      const category = req.query.category as Category | "All" | undefined;
-      const articles = await storage.getArticles(category);
+      const filters: ArticleFilters = {
+        category: req.query.category as Category | "All" | undefined,
+        search: req.query.search as string | undefined,
+        mediaType: req.query.mediaType as MediaType | undefined,
+        fromDate: req.query.fromDate as string | undefined,
+        toDate: req.query.toDate as string | undefined,
+      };
+      const articles = await storage.getArticles(filters);
       res.json(articles);
     } catch (error) {
       res.status(500).json({ error: "Failed to fetch articles" });
@@ -49,6 +55,19 @@ export async function registerRoutes(
     }
   });
 
+  app.patch("/api/articles/:id/view", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const article = await storage.incrementViewCount(id);
+      if (!article) {
+        return res.status(404).json({ error: "Article not found" });
+      }
+      res.json({ viewCount: article.viewCount });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to increment view count" });
+    }
+  });
+
   app.get("/api/advertisements", async (req, res) => {
     try {
       const placement = req.query.placement as string | undefined;
@@ -56,6 +75,15 @@ export async function registerRoutes(
       res.json(ads);
     } catch (error) {
       res.status(500).json({ error: "Failed to fetch advertisements" });
+    }
+  });
+
+  app.get("/api/seasonal-banner", async (req, res) => {
+    try {
+      const banner = await storage.getActiveSeasonalBanner();
+      res.json(banner);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch seasonal banner" });
     }
   });
 

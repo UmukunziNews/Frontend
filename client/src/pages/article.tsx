@@ -1,18 +1,22 @@
-import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useParams, Link } from "wouter";
 import { ArrowLeft } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MediaPlayer } from "@/components/MediaPlayer";
 import { NewsCard } from "@/components/NewsCard";
+import { SocialShare } from "@/components/SocialShare";
 import { LoadingArticle } from "@/components/LoadingState";
 import { AdPlaceholder } from "@/components/Advertisement";
 import { formatRelativeTime } from "@/lib/utils";
+import { apiRequest } from "@/lib/queryClient";
 import type { Article } from "@shared/schema";
 
 export default function ArticlePage() {
   const params = useParams();
   const articleId = params.id || "";
+  const queryClient = useQueryClient();
 
   const { data: article, isLoading: articleLoading } = useQuery<Article>({
     queryKey: ["/api/articles", articleId],
@@ -23,6 +27,21 @@ export default function ArticlePage() {
     },
     enabled: !!articleId,
   });
+
+  const viewMutation = useMutation({
+    mutationFn: async () => {
+      return apiRequest("PATCH", `/api/articles/${articleId}/view`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/articles", articleId] });
+    },
+  });
+
+  useEffect(() => {
+    if (articleId) {
+      viewMutation.mutate();
+    }
+  }, [articleId]);
 
   const { data: relatedArticles = [] } = useQuery<Article[]>({
     queryKey: ["/api/articles/related", articleId],
@@ -92,9 +111,15 @@ export default function ArticlePage() {
               {article.title}
             </h1>
 
-            <p className="text-lg text-muted-foreground">
+            <p className="text-lg text-muted-foreground mb-4">
               {article.description}
             </p>
+
+            <SocialShare
+              title={article.title}
+              url={`/article/${article.id}`}
+              viewCount={article.viewCount}
+            />
           </div>
 
           <div className="mb-8">

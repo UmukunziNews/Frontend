@@ -3,6 +3,9 @@ import {
   type InsertUser,
   type Article,
   type Advertisement,
+  type ArticleFilters,
+  type SeasonalBanner,
+  type MediaType,
   categories,
   type Category,
 } from "@shared/schema";
@@ -12,17 +15,19 @@ export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
-  getArticles(category?: Category | "All"): Promise<Article[]>;
+  getArticles(filters?: ArticleFilters): Promise<Article[]>;
   getArticleById(id: string): Promise<Article | undefined>;
   getTrendingArticles(): Promise<Article[]>;
   getRelatedArticles(articleId: string): Promise<Article[]>;
   getAdvertisements(placement?: string): Promise<Advertisement[]>;
+  incrementViewCount(id: string): Promise<Article | undefined>;
+  getActiveSeasonalBanner(): Promise<SeasonalBanner | null>;
 }
 
 const dummyArticles: Article[] = [
   {
     id: "1",
-    title: "FUNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNY",
+    title: "Tech Giants Report Record AI Profits",
     description:
       "Major technology companies have reported unprecedented profits as artificial intelligence investments continue to pay dividends across multiple sectors.",
     category: "Business & Tech",
@@ -31,6 +36,7 @@ const dummyArticles: Article[] = [
     thumbnailUrl:
       "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&h=450&fit=crop",
     createdAt: new Date(Date.now() - 1000 * 60 * 5),
+    viewCount: 1523,
   },
   {
     id: "2",
@@ -45,6 +51,7 @@ const dummyArticles: Article[] = [
     thumbnailUrl:
       "https://images.unsplash.com/photo-1489944440615-453fc2b6a9a9?w=800&h=450&fit=crop",
     createdAt: new Date(Date.now() - 1000 * 60 * 15),
+    viewCount: 892,
   },
   {
     id: "3",
@@ -58,6 +65,7 @@ const dummyArticles: Article[] = [
     thumbnailUrl:
       "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=800&h=450&fit=crop",
     createdAt: new Date(Date.now() - 1000 * 60 * 30),
+    viewCount: 2341,
   },
   {
     id: "4",
@@ -72,6 +80,7 @@ const dummyArticles: Article[] = [
     thumbnailUrl:
       "https://images.unsplash.com/photo-1569163139599-0f4517e36f51?w=800&h=450&fit=crop",
     createdAt: new Date(Date.now() - 1000 * 60 * 45),
+    viewCount: 4521,
   },
   {
     id: "5",
@@ -86,6 +95,7 @@ const dummyArticles: Article[] = [
     thumbnailUrl:
       "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&h=450&fit=crop",
     createdAt: new Date(Date.now() - 1000 * 60 * 60),
+    viewCount: 3892,
   },
   {
     id: "6",
@@ -99,6 +109,7 @@ const dummyArticles: Article[] = [
     thumbnailUrl:
       "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800&h=450&fit=crop",
     createdAt: new Date(Date.now() - 1000 * 60 * 90),
+    viewCount: 7823,
   },
   {
     id: "7",
@@ -113,6 +124,7 @@ const dummyArticles: Article[] = [
     thumbnailUrl:
       "https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?w=800&h=450&fit=crop",
     createdAt: new Date(Date.now() - 1000 * 60 * 120),
+    viewCount: 1234,
   },
   {
     id: "8",
@@ -126,6 +138,7 @@ const dummyArticles: Article[] = [
     thumbnailUrl:
       "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=800&h=450&fit=crop",
     createdAt: new Date(Date.now() - 1000 * 60 * 180),
+    viewCount: 2567,
   },
   {
     id: "9",
@@ -139,6 +152,7 @@ const dummyArticles: Article[] = [
     thumbnailUrl:
       "https://images.unsplash.com/photo-1461896836934-16d7caef9f3a?w=800&h=450&fit=crop",
     createdAt: new Date(Date.now() - 1000 * 60 * 240),
+    viewCount: 5432,
   },
   {
     id: "10",
@@ -152,6 +166,7 @@ const dummyArticles: Article[] = [
     thumbnailUrl:
       "https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=800&h=450&fit=crop",
     createdAt: new Date(Date.now() - 1000 * 60 * 300),
+    viewCount: 987,
   },
   {
     id: "11",
@@ -166,6 +181,7 @@ const dummyArticles: Article[] = [
     thumbnailUrl:
       "https://images.unsplash.com/photo-1499781350541-7783f6c6a0c8?w=800&h=450&fit=crop",
     createdAt: new Date(Date.now() - 1000 * 60 * 360),
+    viewCount: 654,
   },
   {
     id: "12",
@@ -179,6 +195,7 @@ const dummyArticles: Article[] = [
     thumbnailUrl:
       "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800&h=450&fit=crop",
     createdAt: new Date(Date.now() - 1000 * 60 * 420),
+    viewCount: 4321,
   },
   {
     id: "13",
@@ -193,6 +210,7 @@ const dummyArticles: Article[] = [
     thumbnailUrl:
       "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=800&h=450&fit=crop",
     createdAt: new Date(Date.now() - 1000 * 60 * 480),
+    viewCount: 8765,
   },
   {
     id: "14",
@@ -207,6 +225,7 @@ const dummyArticles: Article[] = [
     thumbnailUrl:
       "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=800&h=450&fit=crop",
     createdAt: new Date(Date.now() - 1000 * 60 * 540),
+    viewCount: 1876,
   },
   {
     id: "15",
@@ -220,6 +239,7 @@ const dummyArticles: Article[] = [
     thumbnailUrl:
       "https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=800&h=450&fit=crop",
     createdAt: new Date(Date.now() - 1000 * 60 * 600),
+    viewCount: 3421,
   },
   {
     id: "16",
@@ -233,6 +253,7 @@ const dummyArticles: Article[] = [
     thumbnailUrl:
       "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&h=450&fit=crop",
     createdAt: new Date(Date.now() - 1000 * 60 * 660),
+    viewCount: 2109,
   },
   {
     id: "17",
@@ -247,6 +268,7 @@ const dummyArticles: Article[] = [
     thumbnailUrl:
       "https://images.unsplash.com/photo-1493836512294-502baa1986e2?w=800&h=450&fit=crop",
     createdAt: new Date(Date.now() - 1000 * 60 * 720),
+    viewCount: 6543,
   },
   {
     id: "18",
@@ -260,6 +282,50 @@ const dummyArticles: Article[] = [
     thumbnailUrl:
       "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=450&fit=crop",
     createdAt: new Date(Date.now() - 1000 * 60 * 780),
+    viewCount: 3298,
+  },
+];
+
+// Seasonal banners configuration
+const seasonalBanners: SeasonalBanner[] = [
+  {
+    id: "christmas-2025",
+    type: "christmas",
+    title: "Season's Greetings",
+    subtitle: "Wishing you peace, joy, and happy holidays from NewsHub",
+    mediaType: "image",
+    mediaUrl: "https://images.unsplash.com/photo-1512389142860-9c449e58a814?w=1920&h=400&fit=crop",
+    ctaText: "View Holiday Coverage",
+    ctaUrl: "/entertainment",
+    startDate: "2025-12-01",
+    endDate: "2025-12-31",
+    backgroundColor: "#1a472a",
+  },
+  {
+    id: "black-friday-2025",
+    type: "black-friday",
+    title: "Black Friday Special Coverage",
+    subtitle: "The biggest deals and shopping trends of the year",
+    mediaType: "image",
+    mediaUrl: "https://images.unsplash.com/photo-1607083206869-4c7672e72a8a?w=1920&h=400&fit=crop",
+    ctaText: "Shop Smart",
+    ctaUrl: "/business-tech",
+    startDate: "2025-11-24",
+    endDate: "2025-11-30",
+    backgroundColor: "#1a1a1a",
+  },
+  {
+    id: "heroes-day-2025",
+    type: "heroes-day",
+    title: "Honoring Our Heroes",
+    subtitle: "Celebrating the courage and sacrifice of those who serve",
+    mediaType: "image",
+    mediaUrl: "https://images.unsplash.com/photo-1569974507005-6dc61f97fb5c?w=1920&h=400&fit=crop",
+    ctaText: "Read Their Stories",
+    ctaUrl: "/society-people",
+    startDate: "2025-08-25",
+    endDate: "2025-08-31",
+    backgroundColor: "#1e3a5f",
   },
 ];
 
@@ -286,11 +352,13 @@ export class MemStorage implements IStorage {
   private users: Map<string, User>;
   private articles: Article[];
   private advertisements: Advertisement[];
+  private seasonalBanners: SeasonalBanner[];
 
   constructor() {
     this.users = new Map();
     this.articles = dummyArticles;
     this.advertisements = dummyAdvertisements;
+    this.seasonalBanners = seasonalBanners;
   }
 
   async getUser(id: string): Promise<User | undefined> {
@@ -310,19 +378,47 @@ export class MemStorage implements IStorage {
     return user;
   }
 
-  async getArticles(category?: Category | "All"): Promise<Article[]> {
-    if (!category || category === "All") {
-      return [...this.articles].sort(
-        (a, b) =>
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-      );
+  async getArticles(filters?: ArticleFilters): Promise<Article[]> {
+    let filtered = [...this.articles];
+
+    if (filters) {
+      // Filter by category
+      if (filters.category && filters.category !== "All") {
+        filtered = filtered.filter((a) => a.category === filters.category);
+      }
+
+      // Filter by media type
+      if (filters.mediaType) {
+        filtered = filtered.filter((a) => a.mediaType === filters.mediaType);
+      }
+
+      // Filter by search term (title or description)
+      if (filters.search) {
+        const searchLower = filters.search.toLowerCase();
+        filtered = filtered.filter(
+          (a) =>
+            a.title.toLowerCase().includes(searchLower) ||
+            a.description.toLowerCase().includes(searchLower)
+        );
+      }
+
+      // Filter by date range
+      if (filters.fromDate) {
+        const fromDate = new Date(filters.fromDate);
+        filtered = filtered.filter((a) => new Date(a.createdAt) >= fromDate);
+      }
+
+      if (filters.toDate) {
+        const toDate = new Date(filters.toDate);
+        toDate.setHours(23, 59, 59, 999);
+        filtered = filtered.filter((a) => new Date(a.createdAt) <= toDate);
+      }
     }
-    return this.articles
-      .filter((article) => article.category === category)
-      .sort(
-        (a, b) =>
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-      );
+
+    return filtered.sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
   }
 
   async getArticleById(id: string): Promise<Article | undefined> {
@@ -330,7 +426,10 @@ export class MemStorage implements IStorage {
   }
 
   async getTrendingArticles(): Promise<Article[]> {
-    return [...this.articles].sort(() => Math.random() - 0.5).slice(0, 5);
+    // Sort by view count instead of random
+    return [...this.articles]
+      .sort((a, b) => b.viewCount - a.viewCount)
+      .slice(0, 5);
   }
 
   async getRelatedArticles(articleId: string): Promise<Article[]> {
@@ -347,6 +446,28 @@ export class MemStorage implements IStorage {
       return this.advertisements;
     }
     return this.advertisements.filter((ad) => ad.placement === placement);
+  }
+
+  async incrementViewCount(id: string): Promise<Article | undefined> {
+    const articleIndex = this.articles.findIndex((a) => a.id === id);
+    if (articleIndex === -1) return undefined;
+
+    this.articles[articleIndex] = {
+      ...this.articles[articleIndex],
+      viewCount: this.articles[articleIndex].viewCount + 1,
+    };
+    return this.articles[articleIndex];
+  }
+
+  async getActiveSeasonalBanner(): Promise<SeasonalBanner | null> {
+    const today = new Date();
+    const todayStr = today.toISOString().split("T")[0];
+
+    const activeBanner = this.seasonalBanners.find((banner) => {
+      return todayStr >= banner.startDate && todayStr <= banner.endDate;
+    });
+
+    return activeBanner || null;
   }
 }
 

@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { pgTable, text, varchar, timestamp } from "drizzle-orm/pg-core";
+import { pgTable, text, varchar, timestamp, integer } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -29,15 +29,44 @@ export const articles = pgTable("articles", {
   mediaUrl: text("media_url").notNull(),
   thumbnailUrl: text("thumbnail_url").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
+  viewCount: integer("view_count").default(0).notNull(),
 });
 
 export const insertArticleSchema = createInsertSchema(articles).omit({
   id: true,
   createdAt: true,
+  viewCount: true,
 });
 
 export type InsertArticle = z.infer<typeof insertArticleSchema>;
 export type Article = typeof articles.$inferSelect;
+
+// Article search/filter parameters
+export interface ArticleFilters {
+  category?: Category | "All";
+  search?: string;
+  mediaType?: MediaType;
+  fromDate?: string;
+  toDate?: string;
+}
+
+// Seasonal banner types
+export const seasonalBannerTypes = ["christmas", "heroes-day", "black-friday"] as const;
+export type SeasonalBannerType = (typeof seasonalBannerTypes)[number];
+
+export interface SeasonalBanner {
+  id: string;
+  type: SeasonalBannerType;
+  title: string;
+  subtitle?: string;
+  mediaType: "image" | "video" | "gif";
+  mediaUrl: string;
+  ctaText?: string;
+  ctaUrl?: string;
+  startDate: string;
+  endDate: string;
+  backgroundColor?: string;
+}
 
 // Advertisements table
 export const advertisements = pgTable("advertisements", {
