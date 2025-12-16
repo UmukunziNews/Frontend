@@ -58,7 +58,7 @@ export default function AboutPage() {
             transition={{ duration: 0.8 }}
           >
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-              About <span className="text-accent-yellow">NewsHub</span>
+              About <span className="text-accent-yellow">Umukunzi News</span>
             </h1>
             <p className="text-xl text-white/90 max-w-3xl mx-auto">
               For over two decades, we've been committed to delivering accurate, unbiased news 
@@ -120,7 +120,7 @@ export default function AboutPage() {
               transition={{ duration: 0.6 }}
             >
               <p className="text-lg text-muted-foreground mb-6">
-                Founded in 2003, NewsHub began as a small digital publication with a simple mission: 
+                Founded in 2003, Umukunzi News began as a small digital publication with a simple mission: 
                 to provide readers with news they can trust. What started with a team of five passionate 
                 journalists has grown into a global news organization.
               </p>

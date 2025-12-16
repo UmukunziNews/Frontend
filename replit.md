@@ -1,8 +1,8 @@
-# NewsHub - Modern News Broadcasting Platform
+# Umukunzi News - Modern News Broadcasting Platform
 
 ## Overview
 
-NewsHub is a multimedia news broadcasting website built with a modern full-stack architecture. The platform displays news articles across six categories (Entertainment, Business & Tech, Sports, Politics, Society & People, Investigations) with support for video, image, and audio content. The design follows contemporary news platforms like BBC News and The Verge, prioritizing content readability and card-based layouts.
+Umukunzi News is a multimedia news broadcasting website built with a modern full-stack architecture. The platform displays news articles across six categories (Entertainment, Business & Tech, Sports, Politics, Society & People, Investigations) with support for video, image, and audio content. The design follows contemporary news platforms like BBC News and The Verge, prioritizing content readability and card-based layouts.
 
 ## User Preferences
 

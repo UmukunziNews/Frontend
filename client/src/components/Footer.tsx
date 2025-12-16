@@ -63,9 +63,14 @@ export function Footer() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           <div>
-            <Link href="/" className="flex items-center mb-4">
-              <span className="text-2xl font-bold text-accent-blue">News</span>
-              <span className="text-2xl font-bold text-accent-yellow">Hub</span>
+            <Link href="/" className="flex items-center gap-2 mb-4">
+              <div className="w-10 h-10 bg-gradient-to-br from-accent-blue to-accent-blue/80 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-xl">U</span>
+              </div>
+              <div className="flex flex-col leading-none">
+                <span className="text-xl font-bold text-accent-blue tracking-tight">Umukunzi</span>
+                <span className="text-xs font-semibold text-accent-yellow uppercase tracking-widest">News</span>
+              </div>
             </Link>
             <p className="text-muted-foreground text-sm">
               Your trusted source for breaking news, in-depth investigations, 

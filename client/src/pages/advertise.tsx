@@ -143,7 +143,7 @@ export default function AdvertisePage() {
               Ready to Grow Your Brand?
             </h2>
             <p className="text-xl text-white/90 mb-8">
-              Let's discuss how NewsHub can help you reach your marketing goals.
+              Let's discuss how Umukunzi News can help you reach your marketing goals.
             </p>
             <Button
               size="lg"

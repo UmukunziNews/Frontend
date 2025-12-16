@@ -63,10 +63,15 @@ export function Header() {
     <header className="sticky top-0 z-50 bg-background border-b border-border">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between gap-4 h-16">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="flex items-center">
-              <span className="text-2xl font-bold text-accent-blue">News</span>
-              <span className="text-2xl font-bold text-accent-yellow">Hub</span>
+          <Link href="/" className="flex items-center gap-2" data-testid="link-logo">
+            <div className="flex items-center gap-1">
+              <div className="w-8 h-8 bg-gradient-to-br from-accent-blue to-accent-blue/80 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-lg">U</span>
+              </div>
+              <div className="flex flex-col leading-none">
+                <span className="text-lg font-bold text-accent-blue tracking-tight">Umukunzi</span>
+                <span className="text-xs font-semibold text-accent-yellow uppercase tracking-widest">News</span>
+              </div>
             </div>
           </Link>
 
