@@ -86,7 +86,10 @@ export async function registerRoutes(
 
   app.get("/api/seasonal-banner", async (req, res) => {
     try {
-      const response = await fetch(`${EXTERNAL_API_BASE}/api/seasonal-banner`);
+      const response = await fetch(`${EXTERNAL_API_BASE}/api/seasonal-banners/active`);
+      if (!response.ok) {
+        return res.json(null);
+      }
       const data = await response.json();
       res.json(data);
     } catch (error) {
