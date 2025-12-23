@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 
-const EXTERNAL_API_BASE = "https://2e84b936-f90e-4d22-8c25-3b78a96855d7-00-spk6xakfb42o.picard.replit.dev";
+const EXTERNAL_API_BASE = process.env.EXTERNAL_API_BASE || "";
 
 export async function registerRoutes(
   httpServer: Server,

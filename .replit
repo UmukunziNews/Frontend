@@ -37,3 +37,8 @@ author = "agent"
 task = "shell.exec"
 args = "npm run dev"
 waitForPort = 5000
+
+[userenv]
+
+[userenv.shared]
+EXTERNAL_API_BASE = "https://2e84b936-f90e-4d22-8c25-3b78a96855d7-00-spk6xakfb42o.picard.replit.dev"
