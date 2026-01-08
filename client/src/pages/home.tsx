@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { getApiUrl } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import { NewsGrid } from "@/components/NewsGrid";
 import { Sidebar } from "@/components/Sidebar";
@@ -24,7 +25,7 @@ export default function Home() {
     queryKey: ["/api/articles", queryParams],
     queryFn: async () => {
       const url = queryParams ? `/api/articles?${queryParams}` : "/api/articles";
-      const res = await fetch(url);
+      const res = await fetch(getApiUrl(url));
       if (!res.ok) throw new Error("Failed to fetch articles");
       return res.json();
     },
@@ -37,7 +38,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background">
       <SeasonalBanner />
-      
+
       <main className="max-w-7xl mx-auto px-4 py-8">
         {articles.length === 0 && !articlesLoading && (
           <div className="text-center py-12 mb-8">

@@ -39,6 +39,16 @@ export function formatRelativeTime(date: Date | string): string {
     return `${diffInMonths} month${diffInMonths !== 1 ? "s" : ""} ago`;
   }
 
+
   const diffInYears = Math.floor(diffInDays / 365);
   return `${diffInYears} year${diffInYears !== 1 ? "s" : ""} ago`;
+}
+
+export function getApiUrl(path: string) {
+  const baseUrl = import.meta.env.VITE_API_URL;
+  if (!baseUrl) return path;
+  if (path.startsWith("/api")) {
+    return path.replace("/api", baseUrl);
+  }
+  return path;
 }

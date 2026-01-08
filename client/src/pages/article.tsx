@@ -9,7 +9,7 @@ import { NewsCard } from "@/components/NewsCard";
 import { SocialShare } from "@/components/SocialShare";
 import { LoadingArticle } from "@/components/LoadingState";
 import { AdPlaceholder } from "@/components/Advertisement";
-import { formatRelativeTime } from "@/lib/utils";
+import { formatRelativeTime, getApiUrl } from "@/lib/utils";
 import { apiRequest } from "@/lib/queryClient";
 import type { Article } from "@shared/schema";
 
@@ -21,7 +21,7 @@ export default function ArticlePage() {
   const { data: article, isLoading: articleLoading } = useQuery<Article>({
     queryKey: ["/api/articles", articleId],
     queryFn: async () => {
-      const res = await fetch(`/api/articles/${articleId}`);
+      const res = await fetch(getApiUrl(`/api/articles/${articleId}`));
       if (!res.ok) throw new Error("Article not found");
       return res.json();
     },
@@ -46,7 +46,7 @@ export default function ArticlePage() {
   const { data: relatedArticles = [] } = useQuery<Article[]>({
     queryKey: ["/api/articles/related", articleId],
     queryFn: async () => {
-      const res = await fetch(`/api/articles/related/${articleId}`);
+      const res = await fetch(getApiUrl(`/api/articles/related/${articleId}`));
       if (!res.ok) throw new Error("Failed to fetch related articles");
       return res.json();
     },
@@ -133,18 +133,18 @@ export default function ArticlePage() {
 
           <div className="prose prose-lg max-w-none mb-12 text-foreground">
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor 
-              incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+              incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
               exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
             </p>
             <p>
-              Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu 
-              fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in 
+              Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+              fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
               culpa qui officia deserunt mollit anim id est laborum.
             </p>
             <p>
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium 
-              doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore 
+              Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
+              doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore
               veritatis et quasi architecto beatae vitae dicta sunt explicabo.
             </p>
           </div>
