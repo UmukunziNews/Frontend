@@ -8,7 +8,7 @@ import { MediaPlayer } from "@/components/MediaPlayer";
 import { NewsCard } from "@/components/NewsCard";
 import { SocialShare } from "@/components/SocialShare";
 import { LoadingArticle } from "@/components/LoadingState";
-import { AdPlaceholder } from "@/components/Advertisement";
+import { Advertisement } from "@/components/Advertisement";
 import { formatRelativeTime, getApiUrl } from "@/lib/utils";
 import { apiRequest } from "@/lib/queryClient";
 import type { Article } from "@shared/schema";
@@ -136,7 +136,7 @@ export default function ArticlePage() {
             />
           </div>
 
-          <AdPlaceholder placement="inline" className="mb-12" />
+          <Advertisement placement="inline" className="mb-12" />
         </article>
 
         {relatedArticles.length > 0 && (

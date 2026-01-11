@@ -1,10 +1,10 @@
 import { NewsCard } from "./NewsCard";
-import { AdPlaceholder } from "./Advertisement";
-import type { Article, Advertisement } from "@shared/schema";
+import { Advertisement } from "./Advertisement";
+import type { Article, Advertisement as Ad } from "@shared/schema";
 
 interface NewsGridProps {
   articles: Article[];
-  advertisements?: Advertisement[];
+  advertisements?: Ad[];
   showFeatured?: boolean;
 }
 
@@ -51,7 +51,7 @@ export function NewsGrid({ articles, advertisements = [], showFeatured = true }:
             if (item === "ad") {
               return (
                 <div key={`ad-${index}`} className="col-span-1 md:col-span-2 lg:col-span-3">
-                  <AdPlaceholder placement="inline" />
+                  <Advertisement placement="inline" />
                 </div>
               );
             }

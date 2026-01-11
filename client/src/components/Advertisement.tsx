@@ -1,12 +1,45 @@
-import { cn } from "@/lib/utils";
+import { useQuery } from "@tanstack/react-query";
+import { cn, getApiUrl } from "@/lib/utils";
 import type { Advertisement as Ad } from "@shared/schema";
 
 interface AdvertisementProps {
-  ad: Ad;
+  placement?: "sidebar" | "inline";
+  ad?: Ad;
   className?: string;
 }
 
-export function Advertisement({ ad, className }: AdvertisementProps) {
+export function Advertisement({ ad: providedAd, placement, className }: AdvertisementProps) {
+  const { data: ads = [], isLoading } = useQuery<Ad[]>({
+    queryKey: ["/api/advertisements", { placement }],
+    queryFn: async () => {
+      if (!placement) return [];
+      const res = await fetch(getApiUrl(`/api/advertisements?placement=${placement}`));
+      if (!res.ok) throw new Error("Failed to fetch advertisements");
+      return res.json();
+    },
+    enabled: !!placement && !providedAd,
+  });
+
+  if (providedAd) {
+    return <AdDisplay ad={providedAd} className={className} />;
+  }
+
+  if (isLoading && placement) {
+    return <AdPlaceholder placement={placement} className={className} />;
+  }
+
+  if (ads.length === 0) {
+    return null;
+  }
+
+  // Display a random ad from the list
+  const randomAd = ads[Math.floor(Math.random() * ads.length)];
+
+  return <AdDisplay ad={randomAd} className={className} />;
+}
+
+// Internal display component
+function AdDisplay({ ad, className }: { ad: Ad; className?: string }) {
   return (
     <div className={cn("flex flex-col", className)} data-testid={`ad-${ad.id}`}>
       <span className="text-xs text-muted-foreground uppercase tracking-wider mb-2">
@@ -35,7 +68,7 @@ interface AdPlaceholderProps {
 
 export function AdPlaceholder({ placement, className }: AdPlaceholderProps) {
   const dimensions = placement === "sidebar" ? "w-full aspect-[300/250]" : "w-full aspect-[728/90] max-h-24";
-  
+
   return (
     <div className={cn("flex flex-col", className)} data-testid={`ad-placeholder-${placement}`}>
       <span className="text-xs text-muted-foreground uppercase tracking-wider mb-2">

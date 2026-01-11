@@ -1,4 +1,4 @@
-import { AdPlaceholder } from "./Advertisement";
+import { Advertisement } from "./Advertisement";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { TrendingUp } from "lucide-react";
@@ -14,7 +14,7 @@ export function Sidebar({ trendingArticles }: SidebarProps) {
   return (
     <aside className="w-full lg:w-80 flex-shrink-0">
       <div className="sticky top-20 flex flex-col gap-6">
-        <AdPlaceholder placement="sidebar" />
+        <Advertisement placement="sidebar" />
 
         <Card className="p-4">
           <div className="flex items-center gap-2 mb-4">
@@ -50,7 +50,7 @@ export function Sidebar({ trendingArticles }: SidebarProps) {
           </div>
         </Card>
 
-        <AdPlaceholder placement="sidebar" />
+        <Advertisement placement="sidebar" />
       </div>
     </aside>
   );
