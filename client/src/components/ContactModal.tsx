@@ -35,12 +35,12 @@ export function ContactModal({ trigger, open, onOpenChange }: ContactModalProps)
     if (!name || !email || !message) return;
 
     setIsSubmitting(true);
-    
+
     await new Promise(resolve => setTimeout(resolve, 1000));
-    
+
     setIsSubmitting(false);
     setIsSuccess(true);
-    
+
     toast({
       title: "Message Sent!",
       description: "We'll get back to you as soon as possible.",
@@ -57,7 +57,7 @@ export function ContactModal({ trigger, open, onOpenChange }: ContactModalProps)
   };
 
   const contactInfo = [
-    { icon: Mail, label: "Email", value: "contact@newshub.com" },
+    { icon: Mail, label: "Email", value: "contact@umukunzinews.com" },
     { icon: Phone, label: "Phone", value: "+1 (555) 123-4567" },
     { icon: MapPin, label: "Address", value: "123 News Street, NYC" },
   ];
@@ -78,7 +78,7 @@ export function ContactModal({ trigger, open, onOpenChange }: ContactModalProps)
                 Have a question or feedback? We'd love to hear from you.
               </DialogDescription>
             </DialogHeader>
-            
+
             <div className="flex flex-wrap gap-4 mt-4">
               {contactInfo.map((info, index) => (
                 <motion.div
@@ -149,7 +149,7 @@ export function ContactModal({ trigger, open, onOpenChange }: ContactModalProps)
                       />
                     </div>
                   </div>
-                  
+
                   <div className="space-y-2">
                     <Label htmlFor="subject">Subject</Label>
                     <Input
@@ -160,7 +160,7 @@ export function ContactModal({ trigger, open, onOpenChange }: ContactModalProps)
                       data-testid="input-contact-subject"
                     />
                   </div>
-                  
+
                   <div className="space-y-2">
                     <Label htmlFor="message">Message</Label>
                     <Textarea
@@ -173,7 +173,7 @@ export function ContactModal({ trigger, open, onOpenChange }: ContactModalProps)
                       data-testid="input-contact-message"
                     />
                   </div>
-                  
+
                   <Button
                     type="submit"
                     className="w-full gap-2"

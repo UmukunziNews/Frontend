@@ -1,21 +1,29 @@
 import { useQuery } from "@tanstack/react-query";
+import { getApiUrl } from "@/lib/utils";
 import type { SeasonalBanner as SeasonalBannerType } from "@shared/schema";
 
 export function SeasonalBanner() {
   const { data: banner } = useQuery<SeasonalBannerType | null>({
-    queryKey: ["/api/seasonal-banner"],
+    queryKey: ["/api/seasonal-banners/active"],
+    queryFn: async () => {
+      const res = await fetch(getApiUrl("/api/seasonal-banners/active"));
+      if (!res.ok) {
+        return null;
+      }
+      return res.json();
+    },
   });
 
   if (!banner || !banner.mediaUrl) {
     return null;
   }
 
-  const bgStyle = banner.backgroundColor 
+  const bgStyle = banner.backgroundColor
     ? { backgroundColor: banner.backgroundColor }
     : undefined;
 
   return (
-    <div 
+    <div
       className="relative w-full overflow-hidden"
       style={bgStyle}
       data-testid="seasonal-banner"
@@ -37,9 +45,9 @@ export function SeasonalBanner() {
             className="w-full h-48 md:h-64 object-cover"
           />
         )}
-        
+
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />
-        
+
         <div className="absolute inset-0 flex items-center">
           <div className="max-w-7xl mx-auto px-4 w-full">
             <div className="max-w-lg">
