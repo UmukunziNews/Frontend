@@ -39,6 +39,24 @@ export function formatRelativeTime(date: Date | string): string {
     return `${diffInMonths} month${diffInMonths !== 1 ? "s" : ""} ago`;
   }
 
+
   const diffInYears = Math.floor(diffInDays / 365);
   return `${diffInYears} year${diffInYears !== 1 ? "s" : ""} ago`;
+}
+
+export function getApiUrl(path: string) {
+  const baseUrl = import.meta.env.VITE_API_URL;
+  if (!baseUrl) return path;
+
+  // Remove leading/trailing slashes for clean joining
+  const cleanBase = baseUrl.replace(/\/+$/, "");
+  const cleanPath = path.startsWith("/") ? path : `/${path}`;
+
+  // If the path starts with /api, replace it with the base URL
+  if (cleanPath.startsWith("/api")) {
+    return cleanPath.replace("/api", cleanBase);
+  }
+
+  // Fallback for other paths
+  return `${cleanBase}${cleanPath}`;
 }

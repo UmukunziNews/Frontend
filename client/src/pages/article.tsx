@@ -9,7 +9,7 @@ import { NewsCard } from "@/components/NewsCard";
 import { SocialShare } from "@/components/SocialShare";
 import { LoadingArticle } from "@/components/LoadingState";
 import { AdPlaceholder } from "@/components/Advertisement";
-import { formatRelativeTime } from "@/lib/utils";
+import { formatRelativeTime, getApiUrl } from "@/lib/utils";
 import { apiRequest } from "@/lib/queryClient";
 import type { Article } from "@shared/schema";
 
@@ -21,7 +21,7 @@ export default function ArticlePage() {
   const { data: article, isLoading: articleLoading } = useQuery<Article>({
     queryKey: ["/api/articles", articleId],
     queryFn: async () => {
-      const res = await fetch(`/api/articles/${articleId}`);
+      const res = await fetch(getApiUrl(`/api/articles/${articleId}`));
       if (!res.ok) throw new Error("Article not found");
       return res.json();
     },
@@ -30,10 +30,15 @@ export default function ArticlePage() {
 
   const viewMutation = useMutation({
     mutationFn: async () => {
+      console.log(`Triggering view increment for article: ${articleId}`);
       return apiRequest("PATCH", `/api/articles/${articleId}/view`);
     },
     onSuccess: () => {
+      console.log(`View incremented successfully for article: ${articleId}`);
       queryClient.invalidateQueries({ queryKey: ["/api/articles", articleId] });
+    },
+    onError: (error) => {
+      console.error(`Failed to increment view for article: ${articleId}`, error);
     },
   });
 
@@ -46,7 +51,7 @@ export default function ArticlePage() {
   const { data: relatedArticles = [] } = useQuery<Article[]>({
     queryKey: ["/api/articles/related", articleId],
     queryFn: async () => {
-      const res = await fetch(`/api/articles/related/${articleId}`);
+      const res = await fetch(getApiUrl(`/api/articles/related/${articleId}`));
       if (!res.ok) throw new Error("Failed to fetch related articles");
       return res.json();
     },

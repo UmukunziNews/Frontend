@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { getApiUrl } from "@/lib/utils";
 import { useParams } from "wouter";
 import { NewsGrid } from "@/components/NewsGrid";
 import { Sidebar } from "@/components/Sidebar";
@@ -26,7 +27,7 @@ export default function CategoryPage() {
     queryKey: ["/api/articles", category],
     queryFn: async () => {
       if (!category) return [];
-      const res = await fetch(`/api/articles?category=${encodeURIComponent(category)}`);
+      const res = await fetch(getApiUrl(`/api/articles?category=${encodeURIComponent(category)}`));
       if (!res.ok) throw new Error("Failed to fetch articles");
       return res.json();
     },
