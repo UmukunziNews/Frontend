@@ -1,6 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import { Link } from "wouter";
-import { Button } from "@/components/ui/button";
 import type { SeasonalBanner as SeasonalBannerType } from "@shared/schema";
 
 export function SeasonalBanner() {
@@ -8,7 +6,7 @@ export function SeasonalBanner() {
     queryKey: ["/api/seasonal-banner"],
   });
 
-  if (!banner) {
+  if (!banner || !banner.mediaUrl) {
     return null;
   }
 
@@ -49,19 +47,9 @@ export function SeasonalBanner() {
                 {banner.title}
               </h2>
               {banner.subtitle && (
-                <p className="text-white/90 text-sm md:text-lg mb-4 drop-shadow">
+                <p className="text-white/90 text-sm md:text-lg drop-shadow">
                   {banner.subtitle}
                 </p>
-              )}
-              {banner.ctaText && banner.ctaUrl && (
-                <Link href={banner.ctaUrl}>
-                  <Button 
-                    className="bg-accent-yellow text-black font-semibold border-accent-yellow"
-                    data-testid="button-banner-cta"
-                  >
-                    {banner.ctaText}
-                  </Button>
-                </Link>
               )}
             </div>
           </div>

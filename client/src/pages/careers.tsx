@@ -120,7 +120,7 @@ export default function CareersPage() {
       department: "Marketing",
       location: "Remote",
       type: "Full-time",
-      description: "Lead our social media presence across platforms. You'll craft engaging content, grow our audience, and represent NewsHub in the digital conversation.",
+      description: "Lead our social media presence across platforms. You'll craft engaging content, grow our audience, and represent Umukunzi News in the digital conversation.",
       requirements: [
         "3+ years of social media management",
         "Experience growing engaged communities",
@@ -130,7 +130,7 @@ export default function CareersPage() {
     },
   ];
 
-  const departments = ["All", ...new Set(jobs.map(j => j.department))];
+  const departments = ["All", ...Array.from(new Set(jobs.map(j => j.department)))];
   const [selectedDepartment, setSelectedDepartment] = useState("All");
 
   const filteredJobs = selectedDepartment === "All" 
@@ -201,7 +201,7 @@ export default function CareersPage() {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Why NewsHub?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Why Umukunzi News?</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               We offer competitive compensation and benefits designed to support 
               your well-being and professional growth.
@@ -356,7 +356,7 @@ export default function CareersPage() {
                 Our Culture
               </h2>
               <p className="text-muted-foreground mb-6">
-                At NewsHub, we believe great journalism comes from great teams. We foster an 
+                At Umukunzi News, we believe great journalism comes from great teams. We foster an 
                 environment where diverse perspectives are valued, innovation is encouraged, 
                 and everyone has the opportunity to make an impact.
               </p>
