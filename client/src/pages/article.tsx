@@ -30,10 +30,15 @@ export default function ArticlePage() {
 
   const viewMutation = useMutation({
     mutationFn: async () => {
+      console.log(`Triggering view increment for article: ${articleId}`);
       return apiRequest("PATCH", `/api/articles/${articleId}/view`);
     },
     onSuccess: () => {
+      console.log(`View incremented successfully for article: ${articleId}`);
       queryClient.invalidateQueries({ queryKey: ["/api/articles", articleId] });
+    },
+    onError: (error) => {
+      console.error(`Failed to increment view for article: ${articleId}`, error);
     },
   });
 

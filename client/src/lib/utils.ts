@@ -47,8 +47,16 @@ export function formatRelativeTime(date: Date | string): string {
 export function getApiUrl(path: string) {
   const baseUrl = import.meta.env.VITE_API_URL;
   if (!baseUrl) return path;
-  if (path.startsWith("/api")) {
-    return path.replace("/api", baseUrl);
+
+  // Remove leading/trailing slashes for clean joining
+  const cleanBase = baseUrl.replace(/\/+$/, "");
+  const cleanPath = path.startsWith("/") ? path : `/${path}`;
+
+  // If the path starts with /api, replace it with the base URL
+  if (cleanPath.startsWith("/api")) {
+    return cleanPath.replace("/api", cleanBase);
   }
-  return path;
+
+  // Fallback for other paths
+  return `${cleanBase}${cleanPath}`;
 }
