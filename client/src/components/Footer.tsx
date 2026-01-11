@@ -19,9 +19,9 @@ export function Footer() {
     if (!email) return;
 
     setIsSubscribing(true);
-    
+
     await new Promise(resolve => setTimeout(resolve, 500));
-    
+
     toast({
       title: "Subscribed!",
       description: "Thank you for subscribing to our newsletter.",
@@ -73,7 +73,7 @@ export function Footer() {
               </div>
             </Link>
             <p className="text-muted-foreground text-sm">
-              Your trusted source for breaking news, in-depth investigations, 
+              Your trusted source for breaking news, in-depth investigations,
               and multimedia stories from around the world.
             </p>
           </div>
@@ -154,8 +154,8 @@ export function Footer() {
                 required
                 data-testid="input-newsletter-email"
               />
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 disabled={isSubscribing}
                 data-testid="button-subscribe"
               >
@@ -190,7 +190,7 @@ export function Footer() {
 
         <div className="border-t border-border mt-8 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-muted-foreground">
-            {new Date().getFullYear()} NewsHub. All rights reserved.
+            {new Date().getFullYear()} Umukunzi News. All rights reserved.
           </p>
           <div className="flex items-center gap-4 text-sm text-muted-foreground flex-wrap">
             <Link href="#" className="hover:text-foreground transition-colors">
