@@ -1,8 +1,3 @@
-import { sql } from "drizzle-orm";
-import { pgTable, text, varchar, timestamp, integer } from "drizzle-orm/pg-core";
-import { createInsertSchema } from "drizzle-zod";
-import { z } from "zod";
-
 // Categories for news articles
 export const categories = [
   "Entertainment",
@@ -17,29 +12,7 @@ export type Category = (typeof categories)[number];
 
 // Media types for articles
 export const mediaTypes = ["video", "image", "audio"] as const;
-export type MediaType = (typeof mediaTypes)[number];
-
-// Articles table
-export const articles = pgTable("articles", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  title: text("title").notNull(),
-  description: text("description").notNull(),
-  category: text("category").notNull(),
-  mediaType: text("media_type").notNull(),
-  mediaUrl: text("media_url").notNull(),
-  thumbnailUrl: text("thumbnail_url").notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  viewCount: integer("view_count").default(0).notNull(),
-});
-
-export const insertArticleSchema = createInsertSchema(articles).omit({
-  id: true,
-  createdAt: true,
-  viewCount: true,
-});
-
-export type InsertArticle = z.infer<typeof insertArticleSchema>;
-export type Article = typeof articles.$inferSelect;
+export type MediaType = (typeof mediaTypes)[number]
 
 // Article search/filter parameters
 export interface ArticleFilters {
@@ -67,34 +40,33 @@ export interface SeasonalBanner {
   endDate: string;
   backgroundColor?: string;
 }
+export type AdvertisementPlacement = "sidebar" | "inline";
 
-// Advertisements table
-export const advertisements = pgTable("advertisements", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  title: text("title").notNull(),
-  imageUrl: text("image_url").notNull(),
-  linkUrl: text("link_url").notNull(),
-  placement: text("placement").notNull(), // "sidebar" or "inline"
-});
 
-export const insertAdvertisementSchema = createInsertSchema(advertisements).omit({
-  id: true,
-});
+export interface Advertisement {
+  id: string;
+  title: string;
+  imageUrl: string;
+  linkUrl: string;
+  placement: AdvertisementPlacement;
+}
 
-export type InsertAdvertisement = z.infer<typeof insertAdvertisementSchema>;
-export type Advertisement = typeof advertisements.$inferSelect;
+export interface Article {
+  id: string;
+  title: string;
+  description: string;
+  category: Category;
+  mediaType: MediaType;
+  mediaUrl: string;
+  thumbnailUrl: string;
+  createdAt: Date;
+  viewCount: number;
+}
 
-// Users table (keeping existing)
-export const users = pgTable("users", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  username: text("username").notNull().unique(),
-  password: text("password").notNull(),
-});
+export interface User {
+  id: string;
+  username: string;
+  password: string;
+}
 
-export const insertUserSchema = createInsertSchema(users).pick({
-  username: true,
-  password: true,
-});
 
-export type InsertUser = z.infer<typeof insertUserSchema>;
-export type User = typeof users.$inferSelect;
