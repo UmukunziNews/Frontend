@@ -46,21 +46,8 @@ export function Footer() {
   ];
 
   return (
-    <footer className="bg-card border-t border-border mt-12">
+    <footer className="bg-card border-t border-border">
       <div className="max-w-7xl mx-auto px-4 py-12">
-        {/* <div className="flex justify-end mb-6">
-          <Button
-            onClick={scrollToTop}
-            variant="outline"
-            size="sm"
-            className="gap-2"
-            data-testid="button-back-to-top"
-          >
-            <ArrowUp className="h-4 w-4" />
-            Back to Top
-          </Button>
-        </div> */}
-
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           <div>
             <Link href="/" className="flex items-center gap-2 mb-4">
@@ -73,8 +60,7 @@ export function Footer() {
               </div>
             </Link>
             <p className="text-muted-foreground text-sm">
-              Your trusted source for breaking news, in-depth investigations,
-              and multimedia stories from around the world.
+              Your trusted source for breaking news, in-depth investigations, and multimedia stories from around the world.
             </p>
           </div>
 

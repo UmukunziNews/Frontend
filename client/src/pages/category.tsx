@@ -18,7 +18,7 @@ function getCategoryFromSlug(slug: string): Category | null {
   return categoryMap[slug] || null;
 }
 
-export default function CategoryPage() {
+export default function Category() {
   const params = useParams();
   const categorySlug = params.category || "";
   const category = getCategoryFromSlug(categorySlug);
