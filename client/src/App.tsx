@@ -9,7 +9,7 @@ import { SearchProvider } from "@/context/SearchContext";
 import Home from "@/pages/home";
 import CategoryPage from "@/pages/category";
 import ArticlePage from "@/pages/article";
-import AboutPage from "@/pages/about";
+import AboutPage from "@/pages/aboutSecond";
 import AdvertisePage from "@/pages/advertise";
 import CareersPage from "@/pages/careers";
 import NotFound from "@/pages/not-found";
