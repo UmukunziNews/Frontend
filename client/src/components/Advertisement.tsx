@@ -40,26 +40,54 @@ export function Advertisement({ ad: providedAd, placement, className }: Advertis
 
 // Internal display component
 function AdDisplay({ ad, className }: { ad: Ad; className?: string }) {
+  const dimensions =
+    ad.placement === "sidebar"
+      ? `
+          w-full
+          aspect-[300/250]
+          rounded-xl
+          overflow-hidden
+          shadow-md
+          bg-muted
+        `
+      : `
+          w-full
+          aspect-[16/9]
+          sm:aspect-[16/6]
+          md:aspect-[728/200]
+          lg:aspect-[728/90]
+          max-h-[220px]
+          rounded-2xl
+          overflow-hidden
+          shadow-lg
+          bg-muted
+        `;
+
   return (
     <div className={cn("flex flex-col", className)} data-testid={`ad-${ad.id}`}>
       <span className="text-xs text-muted-foreground uppercase tracking-wider mb-2">
         Advertisement
       </span>
+
       <a
         href={ad.linkUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="block overflow-hidden rounded-lg border border-border hover-elevate"
+        className={cn(
+          "block relative overflow-hidden transition-transform duration-300 hover:scale-[1.02]",
+          dimensions
+        )}
       >
         <img
           src={ad.imageUrl}
           alt={ad.title}
-          className="w-full h-auto object-cover"
+          className="absolute inset-0 w-full h-full object-cover"
         />
       </a>
     </div>
   );
 }
+
 
 interface AdPlaceholderProps {
   placement: "sidebar" | "inline";
