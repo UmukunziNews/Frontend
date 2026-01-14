@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Eye, Share2, Link2, Mail } from "lucide-react";
-import { SiX, SiFacebook, SiLinkedin, SiWhatsapp } from "react-icons/si";
+import { SiX, SiFacebook, SiLinkedin, SiWhatsapp, SiTiktok, SiInstagram } from "react-icons/si";
 import {
   Popover,
   PopoverContent,
@@ -54,6 +54,18 @@ export function SocialShare({ title, url, viewCount }: SocialShareProps) {
       url: `mailto:?subject=${encodedTitle}&body=Check out this article: ${encodedUrl}`,
       color: "hover:text-accent-blue",
     },
+    {
+      name: "Ticktok",
+      icon: SiTiktok,
+      url: `https://www.tiktok.com/share/video/${encodedUrl}`,
+      color: "hover:text-red-600"
+    },
+    {
+      name: "Instagram",
+      icon: SiInstagram,
+      url: `https://www.instagram.com/share/video/${encodedUrl}`,
+      color: "hover:text-red-600"
+    }
   ];
 
   const handleCopyLink = async () => {
@@ -78,22 +90,22 @@ export function SocialShare({ title, url, viewCount }: SocialShareProps) {
     setIsOpen(false);
   };
 
-  const formatViewCount = (count: number): string => {
-    if (count >= 1000000) {
-      return `${(count / 1000000).toFixed(1)}M`;
-    }
-    if (count >= 1000) {
-      return `${(count / 1000).toFixed(1)}K`;
-    }
-    return count.toString();
-  };
+  // const formatViewCount = (count: number): string => {
+  //   if (count >= 1000000) {
+  //     return `${(count / 1000000).toFixed(1)}M`;
+  //   }
+  //   if (count >= 1000) {
+  //     return `${(count / 1000).toFixed(1)}K`;
+  //   }
+  //   return count.toString();
+  // };
 
   return (
     <div className="flex items-center gap-4 flex-wrap">
-      <div className="flex items-center gap-2 text-muted-foreground" data-testid="article-view-count">
+      {/* <div className="flex items-center gap-2 text-muted-foreground" data-testid="article-view-count">
         <Eye className="h-4 w-4" />
         <span className="text-sm font-medium">{formatViewCount(viewCount)} views</span>
-      </div>
+      </div> */}
 
       <Popover open={isOpen} onOpenChange={setIsOpen}>
         <PopoverTrigger asChild>
@@ -111,7 +123,7 @@ export function SocialShare({ title, url, viewCount }: SocialShareProps) {
                   key={link.name}
                   variant="ghost"
                   size="icon"
-                  className={`${link.color} transition-colors`}
+                  className={`${link.color} cursor-pointer transition-colors hover:bg-accent hover:text-accent-foreground`}
                   onClick={() => handleShareClick(link.url)}
                   data-testid={`button-share-${link.name.toLowerCase()}`}
                 >
@@ -121,7 +133,7 @@ export function SocialShare({ title, url, viewCount }: SocialShareProps) {
               <Button
                 variant="ghost"
                 size="icon"
-                className="hover:text-accent-blue transition-colors"
+                className="hover:text-accent-blue transition-colors cursor-pointer hover:bg-accent hover:text-accent-foreground"
                 onClick={handleCopyLink}
                 data-testid="button-copy-link"
               >

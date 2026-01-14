@@ -91,9 +91,9 @@ export default function ArticlePage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <main className="max-w-4xl mx-auto px-4 py-8">
+      <main className="max-w-4xl mx-auto px-4 py-4">
         <Link href="/">
-          <Button variant="ghost" className="mb-6" data-testid="button-back">
+          <Button variant="ghost" className="mb-4" data-testid="button-back">
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to News
           </Button>
@@ -116,25 +116,28 @@ export default function ArticlePage() {
               {article.title}
             </h1>
 
-            <p className="text-lg text-muted-foreground mb-4">
-              {article.description}
-            </p>
-
+            <div className="my-8">
+              <MediaPlayer
+                type={article.mediaType as "video" | "audio" | "image"}
+                src={article.mediaUrl}
+                thumbnailUrl={article.thumbnailUrl}
+                title={article.title}
+              />
+            </div>
             <SocialShare
               title={article.title}
               url={`/article/${article.id}`}
               viewCount={article.viewCount}
             />
+
+            <p className="text-lg text-muted-foreground my-4">
+              {article.description}
+            </p>
+
+
           </div>
 
-          <div className="mb-8">
-            <MediaPlayer
-              type={article.mediaType as "video" | "audio" | "image"}
-              src={article.mediaUrl}
-              thumbnailUrl={article.thumbnailUrl}
-              title={article.title}
-            />
-          </div>
+
 
           <Advertisement placement="inline" className="mb-12" />
         </article>

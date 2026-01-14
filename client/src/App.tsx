@@ -7,22 +7,22 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { SearchProvider } from "@/context/SearchContext";
 import Home from "@/pages/home";
-import CategoryPage from "@/pages/category";
-import ArticlePage from "@/pages/article";
-import AboutPage from "@/pages/about";
-import AdvertisePage from "@/pages/advertise";
-import CareersPage from "@/pages/careers";
-import NotFound from "@/pages/not-found";
+import Category from "@/pages/category";
+import Article from "@/pages/article";
+import About from "@/pages/aboutSecond";
+import Advertise from "@/pages/advertise";
+import Careers from "@/pages/careers";
+import NotFound from "@/pages/404";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
-      <Route path="/about" component={AboutPage} />
-      <Route path="/advertise" component={AdvertisePage} />
-      <Route path="/careers" component={CareersPage} />
-      <Route path="/article/:id" component={ArticlePage} />
-      <Route path="/:category" component={CategoryPage} />
+      <Route path="/about" component={About} />
+      <Route path="/advertise" component={Advertise} />
+      <Route path="/careers" component={Careers} />
+      <Route path="/article/:id" component={Article} />
+      <Route path="/:category" component={Category} />
       <Route component={NotFound} />
     </Switch>
   );
