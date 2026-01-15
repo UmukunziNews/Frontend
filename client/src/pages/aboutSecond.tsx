@@ -1,3 +1,4 @@
+import { Languages } from '@/components/Languages'
 import {
     ArrowPathIcon,
     CloudArrowUpIcon,
@@ -49,6 +50,8 @@ export default function Example() {
                     <p className="mt-2 text-4xl font-semibold tracking-tight text-pretty text-white sm:text-5xl sm:text-balance">
                         No server? No problem.
                     </p>
+                    <Languages />
+
                     <p className="mt-6 text-lg/8 text-gray-300">
                         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste
                         dolor cupiditate blanditiis.

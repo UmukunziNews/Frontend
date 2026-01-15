@@ -1,85 +1,99 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const SCRIPT_ID = "google-translate-script";
 const ELEMENT_ID = "google_translate_element";
 
-type TranslateElementConstructor = (new (
-    options: Record<string, unknown>,
-    elementId: string
-) => unknown) & {
-    InlineLayout?: {
-        SIMPLE: unknown;
-    };
-};
+const languages = [
+    { code: "rw", name: "Kinyarwanda", icon: "🇷🇼" },
+    { code: "en", name: "English", icon: "🇺🇸" },
+    { code: "fr", name: "Français", icon: "🇫🇷" },
+    { code: "sw", name: "Swahili", icon: "🇹🇿" },
+];
 
-interface GoogleTranslateNamespace {
-    TranslateElement?: TranslateElementConstructor;
-}
+export default function GoogleTranslate({ className = "" }) {
+    const [currentLanguage, setCurrentLanguage] = useState("rw");
 
-declare global {
-    interface Window {
-        googleTranslateElementInit?: () => void;
-        google?: {
-            translate?: GoogleTranslateNamespace;
-        };
-    }
-}
-
-const GoogleTranslate = ({ className }: { className?: string }) => {
     useEffect(() => {
-        const renderWidget = () => {
-            const container = document.getElementById(ELEMENT_ID);
-            const hasRendered =
-                container?.querySelector(".goog-te-combo") !== null ||
-                container?.querySelector(".goog-te-gadget") !== null;
+        const init = () => {
+            const el = document.getElementById(ELEMENT_ID);
+            if (!el || el.querySelector("select")) return;
 
-            const TranslateElement = window.google?.translate?.TranslateElement;
-
-            if (!container || hasRendered || !TranslateElement) {
-                return;
-            }
-
-            new TranslateElement(
+            new (window as any).google.translate.TranslateElement(
                 {
                     pageLanguage: "rw",
                     includedLanguages: "rw,en,fr,sw",
                     autoDisplay: false,
-                    layout: TranslateElement.InlineLayout?.SIMPLE,
                 },
                 ELEMENT_ID
             );
         };
 
-        window.googleTranslateElementInit = renderWidget;
+        (window as any).googleTranslateElementInit = init;
 
-        if (window.google?.translate) {
-            renderWidget();
-            return;
-        }
-
-        if (!document.getElementById(SCRIPT_ID)) {
-            const script = document.createElement("script");
-            script.id = SCRIPT_ID;
-            script.src =
+        if ((window as any).google?.translate) init();
+        else if (!document.getElementById(SCRIPT_ID)) {
+            const s = document.createElement("script");
+            s.id = SCRIPT_ID;
+            s.src =
                 "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
-            script.async = true;
-            document.head.appendChild(script);
+            s.async = true;
+            document.head.appendChild(s);
         }
-
-        return () => {
-            if (window.googleTranslateElementInit === renderWidget) {
-                delete window.googleTranslateElementInit;
-            }
-        };
     }, []);
 
-    return (
-        <div
-            id={ELEMENT_ID}
-            className={className}
-            aria-label="Choose language for the page"
-        />
-    );
-};
+    const changeLanguage = (code: string) => {
+        const select = document.querySelector(".goog-te-combo") as HTMLSelectElement;
+        if (!select) return;
+        select.value = code;
+        select.dispatchEvent(new Event("change"));
+        setCurrentLanguage(code);
+    };
 
-export default GoogleTranslate;
+    return (
+        <div className={`w-full ${className}`}>
+            <div id={ELEMENT_ID} className="hidden" />
+
+            <div className="relative mx-auto w-fit rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 shadow-xl p-1">
+                <AnimatePresence mode="wait">
+                    <div className="flex gap-1">
+                        {languages.map((lang) => {
+                            const active = currentLanguage === lang.code;
+
+                            return (
+                                <motion.button
+                                    key={lang.code}
+                                    onClick={() => changeLanguage(lang.code)}
+                                    whileTap={{ scale: 0.94 }}
+                                    className={`relative flex items-center gap-2 px-4 h-10 rounded-xl text-sm font-medium transition
+                    ${active ? "text-white" : "text-slate-300 hover:text-white"}
+                  `}
+                                >
+                                    {active && (
+                                        <motion.div
+                                            layoutId="lang-pill"
+                                            className="absolute inset-0 rounded-xl bg-[#0086df]"
+                                            transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                                        />
+                                    )}
+                                    <span className="relative text-lg">{lang.icon}</span>
+                                    <span className="relative hidden sm:block">{lang.name}</span>
+                                </motion.button>
+                            );
+                        })}
+                    </div>
+                </AnimatePresence>
+            </div>
+
+            <style>{`
+        .goog-te-banner-frame,
+        .goog-te-balloon-frame,
+        .goog-te-gadget-icon,
+        .goog-te-menu-value {
+          display: none !important;
+        }
+        body { top: 0 !important; }
+      `}</style>
+        </div>
+    );
+}

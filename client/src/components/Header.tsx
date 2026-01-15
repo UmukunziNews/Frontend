@@ -103,10 +103,11 @@ export function Header() {
                 </Link>
               );
             })}
-            <Languages />
+            {/* <Languages /> */}
 
           </nav>
 
+          {/* <Languages /> */}
           <div className="flex items-center gap-2">
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
