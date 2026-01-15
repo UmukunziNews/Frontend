@@ -4,9 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { categories } from "@shared/schema";
-import { SiFacebook, SiX, SiInstagram, SiYoutube, SiLinkedin } from "react-icons/si";
-import { ArrowUp } from "lucide-react";
+
 import { ContactModal } from "@/components/ContactModal";
+import { companyLinks } from "./data/companyLinks";
+import { footerPolicies } from "./data/footerPolicies";
 
 export function Footer() {
   const [email, setEmail] = useState("");
@@ -30,20 +31,6 @@ export function Footer() {
     setIsSubscribing(false);
   };
 
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
-
-  const socialLinks = [
-    { icon: SiFacebook, href: "https://facebook.com", label: "Facebook" },
-    { icon: SiX, href: "https://x.com", label: "X" },
-    { icon: SiInstagram, href: "https://instagram.com", label: "Instagram" },
-    { icon: SiYoutube, href: "https://youtube.com", label: "YouTube" },
-    { icon: SiLinkedin, href: "https://linkedin.com", label: "LinkedIn" },
-  ];
 
   return (
     <footer className="bg-card border-t border-border">
@@ -86,45 +73,32 @@ export function Footer() {
 
           <div>
             <h4 className="font-bold mb-4">Company</h4>
+
             <ul className="flex flex-col gap-2">
-              <li>
-                <Link
-                  href="/about"
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                  data-testid="footer-link-about"
-                >
-                  About Us
-                </Link>
-              </li>
-              <li>
-                <button
-                  onClick={() => setContactOpen(true)}
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors text-left"
-                  data-testid="footer-link-contact"
-                >
-                  Contact
-                </button>
-              </li>
-              <li>
-                <Link
-                  href="/careers"
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                  data-testid="footer-link-careers"
-                >
-                  Careers
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/advertise"
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                  data-testid="footer-link-advertise"
-                >
-                  Advertise Here
-                </Link>
-              </li>
+              {companyLinks.map((link) => (
+                <li key={link.label}>
+                  {link.action === "contact" ? (
+                    <button
+                      onClick={() => setContactOpen(true)}
+                      className="text-sm text-muted-foreground hover:text-foreground transition-colors text-left"
+                      data-testid={link.testId}
+                    >
+                      {link.label}
+                    </button>
+                  ) : (
+                    <Link
+                      href={link.href!}
+                      className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                      data-testid={link.testId}
+                    >
+                      {link.label}
+                    </Link>
+                  )}
+                </li>
+              ))}
             </ul>
           </div>
+
 
           <div>
             <h4 className="font-bold mb-4">Newsletter</h4>
@@ -151,45 +125,50 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="font-bold mb-4">Follow Us</h4>
-            <p className="text-muted-foreground text-sm mb-4">
-              Stay connected on social media.
-            </p>
-            <div className="flex items-center gap-2 flex-wrap">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={social.label}
-                  data-testid={`link-social-${social.label.toLowerCase()}`}
-                >
-                  <Button variant="outline" size="icon">
-                    <social.icon className="h-4 w-4" />
-                  </Button>
-                </a>
+            <h4 className="font-bold mb-4">Company</h4>
+
+            <ul className="flex flex-col gap-2">
+              {companyLinks.map((link) => (
+                <li key={link.label}>
+                  {link.action === "contact" ? (
+                    <button
+                      onClick={() => setContactOpen(true)}
+                      className="text-sm text-muted-foreground hover:text-foreground transition-colors text-left"
+                      data-testid={link.testId}
+                    >
+                      {link.label}
+                    </button>
+                  ) : (
+                    <Link
+                      href={link.href!}
+                      className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                      data-testid={link.testId}
+                    >
+                      {link.label}
+                    </Link>
+                  )}
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
         </div>
-
         <div className="border-t border-border mt-8 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-muted-foreground">
             {new Date().getFullYear()} Umukunzi News. All rights reserved.
           </p>
           <div className="flex items-center gap-4 text-sm text-muted-foreground flex-wrap">
-            <Link href="#" className="hover:text-foreground transition-colors">
-              Privacy Policy
-            </Link>
-            <Link href="#" className="hover:text-foreground transition-colors">
-              Terms of Service
-            </Link>
-            <Link href="#" className="hover:text-foreground transition-colors">
-              Cookie Policy
-            </Link>
+            {footerPolicies.map((policy) => (
+              <Link
+                key={policy.label}
+                href={policy.href}
+                className="hover:text-foreground transition-colors"
+              >
+                {policy.label}
+              </Link>
+            ))}
           </div>
         </div>
+
       </div>
       <ContactModal open={contactOpen} onOpenChange={setContactOpen} />
     </footer>

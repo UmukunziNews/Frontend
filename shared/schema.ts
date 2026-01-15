@@ -10,7 +10,6 @@ export const categories = [
 
 export type Category = (typeof categories)[number];
 
-// Media types for articles
 export const mediaTypes = ["video", "image", "audio"] as const;
 export type MediaType = (typeof mediaTypes)[number]
 
