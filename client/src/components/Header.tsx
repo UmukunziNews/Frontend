@@ -21,6 +21,7 @@ import {
 import { useState } from "react";
 import { categories, mediaTypes, type Category, type MediaType } from "@shared/schema";
 import { useSearch } from "@/context/SearchContext";
+import { Languages } from "./Languages";
 
 export function Header() {
   const [location] = useLocation();
@@ -102,14 +103,16 @@ export function Header() {
                 </Link>
               );
             })}
+            <Languages />
+
           </nav>
 
           <div className="flex items-center gap-2">
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
+                <Button
+                  variant="ghost"
+                  size="icon"
                   className={hasActiveFilters ? "text-accent-blue" : ""}
                   data-testid="button-search"
                 >
