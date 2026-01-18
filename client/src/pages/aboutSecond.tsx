@@ -416,9 +416,13 @@ export default function AboutPage() {
                 </div>
             </section>
 
-            {/* Values Section with Hover Effects */}
-            <section className="py-20 bg-background">
-                <div className="max-w-7xl mx-auto px-4">
+            {/* Values Section with Creative Design */}
+            <section className="py-20 bg-background relative overflow-hidden">
+                {/* Decorative background elements */}
+                <div className="absolute top-20 left-10 w-72 h-72 bg-accent-blue/5 rounded-full blur-3xl" />
+                <div className="absolute bottom-20 right-10 w-72 h-72 bg-accent-yellow/5 rounded-full blur-3xl" />
+
+                <div className="max-w-7xl mx-auto px-4 relative z-10">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -429,7 +433,10 @@ export default function AboutPage() {
                         <h2 className="text-4xl md:text-5xl font-bold mb-4">
                             Our Core <span className="text-accent-blue">Values</span>
                         </h2>
-                        <div className="w-24 h-1.5 bg-accent-blue mx-auto rounded-full" />
+                        <div className="w-24 h-1.5 bg-accent-blue mx-auto rounded-full mb-4" />
+                        <p className="text-muted-foreground max-w-2xl mx-auto">
+                            The principles that guide everything we do
+                        </p>
                     </motion.div>
 
                     <motion.div
@@ -437,29 +444,72 @@ export default function AboutPage() {
                         whileInView="animate"
                         viewport={{ once: true, margin: "-100px" }}
                         variants={staggerContainer}
-                        className="grid md:grid-cols-2 lg:grid-cols-4 gap-6"
+                        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
                     >
                         {values.map((value, index) => (
                             <motion.div
                                 key={value.title}
                                 variants={fadeInUp}
+                                className="flex justify-center"
                             >
                                 <motion.div
-                                    whileHover={{ y: -10, scale: 1.02 }}
-                                    className="h-full"
+                                    whileHover={{ y: -15 }}
+                                    className="w-full max-w-sm"
                                 >
-                                    <Card className="p-6 h-full relative overflow-hidden group border-2 border-transparent hover:border-accent-blue/50 transition-all duration-300">
-                                        {/* Gradient background on hover */}
-                                        <div className="absolute inset-0 bg-accent-blue/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
+                                    <Card className="p-8 h-full relative overflow-hidden group border-2 border-border hover:border-accent-blue transition-all duration-500 hover:shadow-2xl">
+                                        {/* Animated gradient background on hover */}
                                         <motion.div
-                                            whileHover={{ scale: 1.1, rotate: 5 }}
-                                            className="w-16 h-16 bg-accent-blue rounded-xl flex items-center justify-center mb-4 shadow-lg relative z-10"
-                                        >
-                                            <value.icon className="h-8 w-8 text-white" />
-                                        </motion.div>
-                                        <h3 className="font-bold text-xl mb-3 relative z-10">{value.title}</h3>
-                                        <p className="text-muted-foreground leading-relaxed relative z-10">{value.description}</p>
+                                            className="absolute inset-0 bg-gradient-to-br from-accent-blue/10 via-accent-yellow/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                                            animate={{
+                                                backgroundPosition: ["0% 0%", "100% 100%"],
+                                            }}
+                                            transition={{
+                                                duration: 3,
+                                                repeat: Infinity,
+                                                repeatType: "reverse",
+                                            }}
+                                        />
+
+                                        {/* Icon container - centered */}
+                                        <div className="flex justify-center mb-6 relative z-10">
+                                            <motion.div
+                                                whileHover={{ scale: 1.15, rotate: 360 }}
+                                                transition={{ duration: 0.6, type: "spring" }}
+                                                className="relative"
+                                            >
+                                                {/* Pulsing background circle */}
+                                                <motion.div
+                                                    className="absolute inset-0 bg-accent-blue/20 rounded-2xl"
+                                                    animate={{
+                                                        scale: [1, 1.2, 1],
+                                                        opacity: [0.5, 0.2, 0.5],
+                                                    }}
+                                                    transition={{
+                                                        duration: 2,
+                                                        repeat: Infinity,
+                                                        ease: "easeInOut",
+                                                    }}
+                                                />
+
+                                                {/* Icon */}
+                                                <div className="relative w-20 h-20 bg-accent-blue rounded-2xl flex items-center justify-center shadow-xl">
+                                                    <value.icon className="h-10 w-10 text-white" />
+                                                </div>
+                                            </motion.div>
+                                        </div>
+
+                                        {/* Content - centered */}
+                                        <div className="text-center relative z-10">
+                                            <h3 className="font-bold text-xl mb-3 group-hover:text-accent-blue transition-colors duration-300">
+                                                {value.title}
+                                            </h3>
+                                            <p className="text-muted-foreground leading-relaxed text-sm">
+                                                {value.description}
+                                            </p>
+                                        </div>
+
+                                        {/* Decorative corner accent */}
+                                        <div className="absolute top-0 right-0 w-20 h-20 bg-accent-yellow/10 rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                                     </Card>
                                 </motion.div>
                             </motion.div>
@@ -561,10 +611,10 @@ export default function AboutPage() {
                                                     <span className="text-sm font-medium group-hover/social:text-accent-blue transition-colors">
                                                         {member.socials.instagram}
                                                     </span>
-                                                </a >
+                                                </a>
 
                                                 {/* TikTok */}
-                                                < a
+                                                <a
                                                     href={`https://tiktok.com/${member.socials.tiktok.replace('@', '@')}`}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
@@ -578,10 +628,10 @@ export default function AboutPage() {
                                                     <span className="text-sm font-medium group-hover/social:text-accent-blue transition-colors">
                                                         {member.socials.tiktok}
                                                     </span>
-                                                </a >
+                                                </a>
 
                                                 {/* X (Twitter) */}
-                                                < a
+                                                <a
                                                     href={`https://x.com/${member.socials.x.replace('@', '')}`}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
@@ -593,19 +643,19 @@ export default function AboutPage() {
                                                     <span className="text-sm font-medium group-hover/social:text-accent-blue transition-colors">
                                                         {member.socials.x}
                                                     </span>
-                                                </a >
-                                            </div >
-                                        </Card >
-                                    </div >
-                                </motion.div >
-                            </motion.div >
+                                                </a>
+                                            </div>
+                                        </Card>
+                                    </div>
+                                </motion.div>
+                            </motion.div>
                         ))}
-                    </motion.div >
-                </div >
-            </section >
+                    </motion.div>
+                </div>
+            </section>
 
             {/* CTA Section */}
-            < section className="py-20 bg-gradient-to-r from-accent-blue to-accent-blue/80 relative overflow-hidden" >
+            <section className="py-20 bg-gradient-to-r from-accent-blue to-accent-blue/80 relative overflow-hidden">
                 <motion.div
                     className="absolute inset-0 opacity-20"
                     animate={{
