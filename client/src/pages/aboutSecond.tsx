@@ -12,7 +12,9 @@ import {
     Shield,
     Sparkles,
     Eye,
-    CheckCircle2
+    CheckCircle2,
+    Instagram,
+    Twitter
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
@@ -138,10 +140,46 @@ export default function AboutPage() {
     ];
 
     const team = [
-        { name: "Sarah Johnson", role: "Editor-in-Chief", initial: "SJ" },
-        { name: "Michael Chen", role: "Head of Investigations", initial: "MC" },
-        { name: "Emily Rodriguez", role: "Technology Editor", initial: "ER" },
-        { name: "David Kim", role: "International Correspondent", initial: "DK" },
+        {
+            name: "Sarah Johnson",
+            role: "Editor-in-Chief",
+            initial: "SJ",
+            socials: {
+                instagram: "@sarahjohnson",
+                tiktok: "@sarahjnews",
+                x: "@sjohnson_news"
+            }
+        },
+        {
+            name: "Michael Chen",
+            role: "Head of Investigations",
+            initial: "MC",
+            socials: {
+                instagram: "@michaelchen",
+                tiktok: "@mcheninvestigates",
+                x: "@mchen_reports"
+            }
+        },
+        {
+            name: "Emily Rodriguez",
+            role: "Technology Editor",
+            initial: "ER",
+            socials: {
+                instagram: "@emilyrodriguez",
+                tiktok: "@techwithem",
+                x: "@erodriguez_tech"
+            }
+        },
+        {
+            name: "David Kim",
+            role: "International Correspondent",
+            initial: "DK",
+            socials: {
+                instagram: "@davidkim",
+                tiktok: "@dkimworld",
+                x: "@dkim_global"
+            }
+        },
     ];
 
     return (
@@ -463,7 +501,7 @@ export default function AboutPage() {
                         />
                     </motion.div>
 
-                    {/* Leadership Team Cards */}
+                    {/* Leadership Team Cards with Flip Animation */}
                     <motion.div
                         initial="initial"
                         whileInView="animate"
@@ -475,31 +513,99 @@ export default function AboutPage() {
                             <motion.div
                                 key={member.name}
                                 variants={fadeInUp}
+                                className="group perspective-1000"
+                                style={{ perspective: "1000px" }}
                             >
                                 <motion.div
-                                    whileHover={{ y: -10 }}
-                                    className="text-center"
+                                    className="relative w-full h-80 transition-transform duration-700 preserve-3d"
+                                    style={{ transformStyle: "preserve-3d" }}
+                                    whileHover={{ rotateY: 180 }}
                                 >
-                                    <Card className="p-6 hover:shadow-2xl transition-all duration-300 border-2 border-transparent hover:border-accent-blue/30">
-                                        <motion.div
-                                            whileHover={{ scale: 1.1, rotate: 360 }}
-                                            transition={{ duration: 0.6 }}
-                                            className="w-28 h-28 bg-gradient-to-br from-accent-blue to-accent-blue/70 rounded-full flex items-center justify-center mx-auto mb-4 shadow-xl"
-                                        >
-                                            <span className="text-3xl font-bold text-white">{member.initial}</span>
-                                        </motion.div>
-                                        <h3 className="font-bold text-lg mb-1">{member.name}</h3>
-                                        <p className="text-muted-foreground text-sm">{member.role}</p>
-                                    </Card>
-                                </motion.div>
-                            </motion.div>
+                                    {/* Front of Card */}
+                                    <div className="absolute inset-0 backface-hidden" style={{ backfaceVisibility: "hidden" }}>
+                                        <Card className="p-6 h-full flex flex-col items-center justify-center hover:shadow-2xl transition-all duration-300 border-2 border-transparent hover:border-accent-blue/30">
+                                            <motion.div
+                                                className="w-28 h-28 bg-gradient-to-br from-accent-blue to-accent-blue/70 rounded-full flex items-center justify-center mb-4 shadow-xl"
+                                            >
+                                                <span className="text-3xl font-bold text-white">{member.initial}</span>
+                                            </motion.div>
+                                            <h3 className="font-bold text-lg mb-1">{member.name}</h3>
+                                            <p className="text-muted-foreground text-sm mb-3">{member.role}</p>
+                                            <p className="text-xs text-accent-blue">Hover to see socials</p>
+                                        </Card>
+                                    </div>
+
+                                    {/* Back of Card */}
+                                    <div
+                                        className="absolute inset-0 backface-hidden"
+                                        style={{
+                                            backfaceVisibility: "hidden",
+                                            transform: "rotateY(180deg)"
+                                        }}
+                                    >
+                                        <Card className="p-6 h-full flex flex-col items-center justify-center bg-gradient-to-br from-accent-blue/10 to-accent-yellow/10 border-2 border-accent-blue/30">
+                                            <h3 className="font-bold text-lg mb-2">{member.name}</h3>
+                                            <p className="text-muted-foreground text-xs mb-6">Follow me on:</p>
+
+                                            <div className="space-y-4 w-full">
+                                                {/* Instagram */}
+                                                <a
+                                                    href={`https://instagram.com/${member.socials.instagram.replace('@', '')}`}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="flex items-center gap-3 p-3 rounded-lg bg-card hover:bg-accent-blue/20 transition-all duration-300 group/social"
+                                                >
+                                                    <div className="p-2 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg">
+                                                        <Instagram className="h-5 w-5 text-white" />
+                                                    </div>
+                                                    <span className="text-sm font-medium group-hover/social:text-accent-blue transition-colors">
+                                                        {member.socials.instagram}
+                                                    </span>
+                                                </a >
+
+                                                {/* TikTok */}
+                                                < a
+                                                    href={`https://tiktok.com/${member.socials.tiktok.replace('@', '@')}`}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="flex items-center gap-3 p-3 rounded-lg bg-card hover:bg-accent-blue/20 transition-all duration-300 group/social"
+                                                >
+                                                    <div className="p-2 bg-black rounded-lg">
+                                                        <svg className="h-5 w-5 text-white" viewBox="0 0 24 24" fill="currentColor">
+                                                            <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
+                                                        </svg>
+                                                    </div>
+                                                    <span className="text-sm font-medium group-hover/social:text-accent-blue transition-colors">
+                                                        {member.socials.tiktok}
+                                                    </span>
+                                                </a >
+
+                                                {/* X (Twitter) */}
+                                                < a
+                                                    href={`https://x.com/${member.socials.x.replace('@', '')}`}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="flex items-center gap-3 p-3 rounded-lg bg-card hover:bg-accent-blue/20 transition-all duration-300 group/social"
+                                                >
+                                                    <div className="p-2 bg-black rounded-lg">
+                                                        <Twitter className="h-5 w-5 text-white" />
+                                                    </div>
+                                                    <span className="text-sm font-medium group-hover/social:text-accent-blue transition-colors">
+                                                        {member.socials.x}
+                                                    </span>
+                                                </a >
+                                            </div >
+                                        </Card >
+                                    </div >
+                                </motion.div >
+                            </motion.div >
                         ))}
-                    </motion.div>
-                </div>
-            </section>
+                    </motion.div >
+                </div >
+            </section >
 
             {/* CTA Section */}
-            <section className="py-20 bg-gradient-to-r from-accent-blue to-accent-blue/80 relative overflow-hidden">
+            < section className="py-20 bg-gradient-to-r from-accent-blue to-accent-blue/80 relative overflow-hidden" >
                 <motion.div
                     className="absolute inset-0 opacity-20"
                     animate={{
@@ -544,7 +650,7 @@ export default function AboutPage() {
                         </motion.button>
                     </motion.div>
                 </div>
-            </section>
-        </div>
+            </section >
+        </div >
     );
 }
