@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Switch, Route } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
@@ -6,6 +7,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { SearchProvider } from "@/context/SearchContext";
+
 import Home from "@/pages/home";
 import Category from "@/pages/category";
 import Article from "@/pages/article";
@@ -13,6 +15,7 @@ import About from "@/pages/aboutSecond";
 import Advertise from "@/pages/advertise";
 import Careers from "@/pages/careers";
 import NotFound from "@/pages/404";
+
 
 function Router() {
   return (
@@ -29,6 +32,35 @@ function Router() {
 }
 
 function App() {
+  useEffect(() => {
+    const blockDefault = (e: Event) => {
+      e.preventDefault();
+    };
+
+    const blockShortcuts = (e: KeyboardEvent) => {
+      if (
+        (e.ctrlKey || e.metaKey) &&
+        ["c", "v", "x", "a", "s", "p"].includes(e.key.toLowerCase())
+      ) {
+        e.preventDefault();
+      }
+    };
+
+    document.addEventListener("copy", blockDefault);
+    document.addEventListener("cut", blockDefault);
+    document.addEventListener("paste", blockDefault);
+    document.addEventListener("contextmenu", blockDefault);
+    document.addEventListener("keydown", blockShortcuts);
+
+    return () => {
+      document.removeEventListener("copy", blockDefault);
+      document.removeEventListener("cut", blockDefault);
+      document.removeEventListener("paste", blockDefault);
+      document.removeEventListener("contextmenu", blockDefault);
+      document.removeEventListener("keydown", blockShortcuts);
+    };
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
