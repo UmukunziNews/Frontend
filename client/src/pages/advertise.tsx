@@ -64,7 +64,7 @@ export default function AdvertisePage() {
             </Badge>
             <h1 className="text-3xl md:text-5xl font-bold text-white mb-6">
               Reach Millions of <br />
-              <span className="text-accent-yellow">Engaged Readers</span>
+              <span className="text-accent-orange">Engaged Readers</span>
             </h1>
             <p className="text-xl text-white/90 max-w-3xl mx-auto mb-8">
               Connect with our premium audience through targeted advertising

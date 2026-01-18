@@ -50,7 +50,7 @@ export default function AboutPage() {
             backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
           }}
         />
-        
+
         <div className="max-w-7xl mx-auto px-4 text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -58,10 +58,10 @@ export default function AboutPage() {
             transition={{ duration: 0.8 }}
           >
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-              About <span className="text-accent-yellow">Umukunzi News</span>
+              About <span className="text-accent-orange">Umukunzi News</span>
             </h1>
             <p className="text-xl text-white/90 max-w-3xl mx-auto">
-              For over two decades, we've been committed to delivering accurate, unbiased news 
+              For over two decades, we've been committed to delivering accurate, unbiased news
               that empowers our readers to understand and engage with the world around them.
             </p>
           </motion.div>
@@ -120,16 +120,16 @@ export default function AboutPage() {
               transition={{ duration: 0.6 }}
             >
               <p className="text-lg text-muted-foreground mb-6">
-                Founded in 2003, Umukunzi News began as a small digital publication with a simple mission: 
-                to provide readers with news they can trust. What started with a team of five passionate 
+                Founded in 2003, Umukunzi News began as a small digital publication with a simple mission:
+                to provide readers with news they can trust. What started with a team of five passionate
                 journalists has grown into a global news organization.
               </p>
               <p className="text-lg text-muted-foreground mb-6">
-                Today, we operate bureaus in over 30 countries, employing hundreds of dedicated 
+                Today, we operate bureaus in over 30 countries, employing hundreds of dedicated
                 professionals who work around the clock to bring you the stories that matter most.
               </p>
               <p className="text-lg text-muted-foreground">
-                Our commitment to journalistic integrity, combined with our embrace of digital innovation, 
+                Our commitment to journalistic integrity, combined with our embrace of digital innovation,
                 has made us one of the most trusted news sources in the world.
               </p>
             </motion.div>
@@ -141,7 +141,7 @@ export default function AboutPage() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="relative"
             >
-              <div className="bg-gradient-to-br from-accent-blue/20 to-accent-yellow/20 rounded-lg p-8 border border-border">
+              <div className="bg-gradient-to-br from-accent-blue/20 to-accent-orange/20 rounded-lg p-8 border border-border">
                 <div className="flex items-center gap-4 mb-6">
                   <div className="p-3 bg-accent-blue rounded-lg">
                     <Award className="h-8 w-8 text-white" />
@@ -266,7 +266,7 @@ export default function AboutPage() {
               Join Our Community
             </h2>
             <p className="text-xl text-white/90 mb-8">
-              Stay informed with the latest news and become part of a community 
+              Stay informed with the latest news and become part of a community
               that values truth and transparency.
             </p>
           </motion.div>

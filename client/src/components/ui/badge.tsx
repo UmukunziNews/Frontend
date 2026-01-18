@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils"
 
 const badgeVariants = cva(
   "whitespace-nowrap inline-flex items-center rounded-sm border px-2 py-1 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2" +
-  " hover-elevate bg-opacity-80",
+  " hover-elevate",
   {
     variants: {
       variant: {

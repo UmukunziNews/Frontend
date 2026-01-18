@@ -4,13 +4,13 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ContactModal } from "@/components/ContactModal";
-import { 
-  Briefcase, 
-  MapPin, 
-  Clock, 
-  Heart, 
-  Coffee, 
-  Plane, 
+import {
+  Briefcase,
+  MapPin,
+  Clock,
+  Heart,
+  Coffee,
+  Plane,
   GraduationCap,
   DollarSign,
   Users,
@@ -133,8 +133,8 @@ export default function CareersPage() {
   const departments = ["All", ...Array.from(new Set(jobs.map(j => j.department)))];
   const [selectedDepartment, setSelectedDepartment] = useState("All");
 
-  const filteredJobs = selectedDepartment === "All" 
-    ? jobs 
+  const filteredJobs = selectedDepartment === "All"
+    ? jobs
     : jobs.filter(j => j.department === selectedDepartment);
 
   return (
@@ -163,10 +163,10 @@ export default function CareersPage() {
             </Badge>
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
               Shape the Future of <br />
-              <span className="text-accent-yellow">Journalism</span>
+              <span className="text-accent-orange">Journalism</span>
             </h1>
             <p className="text-xl text-white/90 max-w-3xl mx-auto mb-8">
-              Join a team of passionate storytellers, innovators, and truth-seekers. 
+              Join a team of passionate storytellers, innovators, and truth-seekers.
               Together, we inform millions of readers around the world.
             </p>
             <motion.div
@@ -203,7 +203,7 @@ export default function CareersPage() {
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Why Umukunzi News?</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              We offer competitive compensation and benefits designed to support 
+              We offer competitive compensation and benefits designed to support
               your well-being and professional growth.
             </p>
           </motion.div>
@@ -249,7 +249,7 @@ export default function CareersPage() {
             <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
               Find your next opportunity and become part of our story.
             </p>
-            
+
             <div className="flex items-center justify-center gap-2 flex-wrap">
               {departments.map((dept) => (
                 <Button
@@ -275,7 +275,7 @@ export default function CareersPage() {
             {filteredJobs.map((job) => (
               <motion.div key={job.id} variants={fadeInUp}>
                 <Card className="overflow-hidden">
-                  <div 
+                  <div
                     className="p-6 cursor-pointer hover-elevate"
                     onClick={() => setExpandedJob(expandedJob === job.id ? null : job.id)}
                     data-testid={`card-job-${job.id}`}
@@ -306,7 +306,7 @@ export default function CareersPage() {
                       </Button>
                     </div>
                   </div>
-                  
+
                   <motion.div
                     initial={false}
                     animate={{
@@ -327,7 +327,7 @@ export default function CareersPage() {
                           </li>
                         ))}
                       </ul>
-                      <Button 
+                      <Button
                         className="gap-2"
                         onClick={() => setContactOpen(true)}
                         data-testid={`button-apply-${job.id}`}
@@ -356,13 +356,13 @@ export default function CareersPage() {
                 Our Culture
               </h2>
               <p className="text-muted-foreground mb-6">
-                At Umukunzi News, we believe great journalism comes from great teams. We foster an 
-                environment where diverse perspectives are valued, innovation is encouraged, 
+                At Umukunzi News, we believe great journalism comes from great teams. We foster an
+                environment where diverse perspectives are valued, innovation is encouraged,
                 and everyone has the opportunity to make an impact.
               </p>
               <p className="text-muted-foreground mb-6">
-                Whether you're in our newsroom in New York, working remotely from across the 
-                globe, or stationed in one of our international bureaus, you'll be part of a 
+                Whether you're in our newsroom in New York, working remotely from across the
+                globe, or stationed in one of our international bureaus, you'll be part of a
                 community committed to excellence and truth.
               </p>
               <div className="flex items-center gap-4 flex-wrap">
@@ -424,11 +424,11 @@ export default function CareersPage() {
               Don't See the Right Role?
             </h2>
             <p className="text-xl text-white/90 mb-8">
-              We're always looking for talented individuals. Send us your resume 
+              We're always looking for talented individuals. Send us your resume
               and we'll keep you in mind for future opportunities.
             </p>
-            <Button 
-              size="lg" 
+            <Button
+              size="lg"
               className="bg-white text-accent-blue gap-2"
               onClick={() => setContactOpen(true)}
               data-testid="button-careers-general"

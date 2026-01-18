@@ -84,8 +84,8 @@ export default {
         "accent-blue": {
           DEFAULT: "hsl(var(--accent-blue) / <alpha-value>)",
         },
-        "accent-yellow": {
-          DEFAULT: "hsl(var(--accent-yellow) / <alpha-value>)",
+        "accent-orange": {
+          DEFAULT: "hsl(var(--accent-orange) / <alpha-value>)",
         },
       },
       fontFamily: {

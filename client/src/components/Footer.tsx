@@ -56,7 +56,7 @@ export function Footer() {
               </div>
               <div className="flex flex-col leading-none">
                 <span className="text-xl font-bold text-accent-blue tracking-tight">Umukunzi</span>
-                <span className="text-xs font-semibold text-accent-yellow uppercase tracking-widest">News</span>
+                <span className="text-xs font-semibold text-accent-orange uppercase tracking-widest">News</span>
               </div>
             </Link>
             <p className="text-muted-foreground text-sm">

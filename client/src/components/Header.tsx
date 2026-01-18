@@ -70,7 +70,7 @@ export function Header() {
               </div>
               <div className="flex flex-col leading-none">
                 <span className="text-lg font-bold text-accent-blue tracking-tight">Umukunzi</span>
-                <span className="text-xs font-semibold text-accent-yellow uppercase tracking-widest">News</span>
+                <span className="text-xs font-semibold text-accent-orange uppercase tracking-widest">News</span>
               </div>
             </div>
           </Link>
@@ -107,9 +107,9 @@ export function Header() {
           <div className="flex items-center gap-2">
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
+                <Button
+                  variant="ghost"
+                  size="icon"
                   className={hasActiveFilters ? "text-accent-blue" : ""}
                   data-testid="button-search"
                 >
